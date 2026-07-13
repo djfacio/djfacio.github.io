@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>David Facio | FANUC AI TP Workflow Case Study</title>
+    <meta
+      name="description"
+      content="Public, open-source toolchain for planning, generating, validating, and safely deploying AI-assisted FANUC TP programs, including a hand-built Rust SNPX/SRTP codec, JSON-schema validation, safety gates, and CI."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23f8c44f'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23161a1d'%3EDF%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html#top" aria-label="Portfolio home">
+        <span class="brand-mark">DF</span>
+        <span class="brand-text">David Facio</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="case-page">
+      <section class="case-hero-detail dual-detail">
+        <a class="breadcrumb" href="index.html#work">Back to work</a>
+        <p class="eyebrow">Open-Source Robotics Tooling</p>
+        <h1>FANUC AI TP Workflow: a safety-gated toolchain for generating and deploying robot programs.</h1>
+        <p>
+          A public, MIT-licensed toolchain that plans, generates, validates, and safely deploys
+          AI-assisted FANUC TP programs &mdash; built around deterministic code generation, schema-based
+          validation, human approval gates, and a Rust implementation of the FANUC SNPX/SRTP
+          controller protocol.
+        </p>
+        <p>
+          <a class="button primary" href="https://github.com/djfacio/fanuc-ai-tp" target="_blank" rel="noreferrer">View on GitHub</a>
+        </p>
+      </section>
+
+      <section class="case-detail-grid">
+        <aside class="case-facts">
+          <h2>Project Snapshot</h2>
+          <dl>
+            <div>
+              <dt>Type</dt>
+              <dd>Open-source, MIT licensed</dd>
+            </div>
+            <div>
+              <dt>Domain</dt>
+              <dd>FANUC TP / KAREL program generation</dd>
+            </div>
+            <div>
+              <dt>Languages</dt>
+              <dd>PowerShell, Rust, JSON Schema</dd>
+            </div>
+            <div>
+              <dt>Protocol</dt>
+              <dd>FANUC SNPX/SRTP V2 codec (from scratch)</dd>
+            </div>
+            <div>
+              <dt>Quality</dt>
+              <dd>GitHub Actions CI, property tests, golden vectors</dd>
+            </div>
+            <div>
+              <dt>Core principle</dt>
+              <dd>Safety gates and human review before any robot write</dd>
+            </div>
+          </dl>
+        </aside>
+
+        <div class="case-sections">
+          <section class="detail-section">
+            <h2>Problem</h2>
+            <p>
+              Hand-writing and deploying FANUC TP programs is slow, error-prone, and hard to review.
+              Generating them with AI raises the stakes: a single bad register write, IO action, or
+              motion instruction sent to a live controller is machine-control software, not a draft.
+              The goal was a workflow that gets the speed of generation without giving up the
+              verifiability and safety discipline a real cell demands.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Architecture</h2>
+            <ul class="decision-list">
+              <li>Plan/spec first: programs are described as validated JSON specs against project-owned schemas before any code exists.</li>
+              <li>Deterministic <code>.LS</code> generation from reviewed motion and program templates &mdash; no free-form robot code.</li>
+              <li>Layered validation: JSON-schema checks, LS safety scanning, and a reviewed cell resource map for every register, IO point, and CALL target.</li>
+              <li>MakeTP / PrintTP round-trip gate compares normalized instructions to prove the compiled <code>.TP</code> matches intent.</li>
+              <li>A Rust SNPX/SRTP V2 codec (built with AI assistance) handles controller reads/writes, verified with property tests, golden wire vectors, and fuzz-corpus replay.</li>
+              <li>Optional RoboGuide and PCDK read-only evidence packets, plus FTP upload/readback reconciliation.</li>
+            </ul>
+          </section>
+
+          <section class="detail-section">
+            <h2>Safety Model</h2>
+            <ul class="decision-list">
+              <li>No auto-run: uploads never execute programs, and physical run decisions stay operator-owned.</li>
+              <li>The build blocks risky patterns &mdash; system variable writes, DCS/UOP references, <code>RUN</code>, and <code>ABORT</code>.</li>
+              <li>Live writes require an approved plan, an exact approval phrase, and an explicit accept-live-write switch.</li>
+              <li>Robot IPs, credentials, packet captures, and run evidence are kept out of version control by design.</li>
+            </ul>
+          </section>
+
+          <section class="detail-section">
+            <h2>Contribution</h2>
+            <p>
+              Creator and domain lead. I built this through AI-assisted development directed by hands-on
+              FANUC experience &mdash; ~60 PowerShell workflow tools, the Rust protocol codec, the JSON schemas,
+              the safety and validation gates, the CI pipeline, and 40+ pages of strategy, workflow, and safety
+              documentation. The engineering judgment &mdash; what's risky on a live controller, what must be
+              validated, how the protocol behaves, and where a human must stay in the loop &mdash; is mine; AI
+              accelerated the implementation.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Engineering Judgment</h2>
+            <p>
+              The hard part was not generating robot code &mdash; it was building the guardrails that make
+              generated code trustworthy. The architecture deliberately separates planning, deterministic
+              generation, validation, and human-approved deployment so that speed never bypasses review,
+              and so failure modes stay visible to operators and maintenance rather than hidden inside a
+              black box.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Public Repository</h2>
+            <p>
+              The full project is public and NDA-safe by design &mdash; it ships sanitized sample configs and
+              starter specs, never real customer cells. Read the code, the schemas, the safety policy, and the CI:
+            </p>
+            <ul class="evidence-list">
+              <li><a href="https://github.com/djfacio/fanuc-ai-tp" target="_blank" rel="noreferrer">github.com/djfacio/fanuc-ai-tp</a></li>
+            </ul>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>David Facio — Robotics &amp; Automation Engineer</span>
+      <span>Public, open-source engineering project.</span>
+    </footer>
+  </body>
+</html>

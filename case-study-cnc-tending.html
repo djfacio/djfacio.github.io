@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>David Facio | Three-Robot CNC Tending Case Study</title>
+    <meta
+      name="description"
+      content="NDA-safe case study for a three-robot CNC machine tending system involving FANUC robotics, hierarchical state machines, safety, pneumatics, and inspection."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23f8c44f'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23161a1d'%3EDF%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html#top" aria-label="Portfolio home">
+        <span class="brand-mark">DF</span>
+        <span class="brand-text">David Facio</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="case-page">
+      <section class="case-hero-detail cnc-detail">
+        <a class="breadcrumb" href="index.html#work">Back to work</a>
+        <p class="eyebrow">Vision-Guided Machine Tending</p>
+        <h1>Three-robot CNC tending system for multi-operation bone screw manufacturing.</h1>
+        <p>
+          NDA-safe summary of a robotic cell with three robots tending three CNC lathes across sequential
+          operations, using hierarchical robot state machines, safety integration, pneumatics, and inspection.
+        </p>
+      </section>
+
+      <section class="case-detail-grid">
+        <aside class="case-facts">
+          <h2>System Snapshot</h2>
+          <dl>
+            <div>
+              <dt>Industry</dt>
+              <dd>Medical manufacturing</dd>
+            </div>
+            <div>
+              <dt>Application</dt>
+              <dd>CNC machine tending</dd>
+            </div>
+            <div>
+              <dt>Robots</dt>
+              <dd>Three FANUC robots</dd>
+            </div>
+            <div>
+              <dt>Process</dt>
+              <dd>Three sequential operations</dd>
+            </div>
+            <div>
+              <dt>Core challenge</dt>
+              <dd>Coordinated tending, state control, recovery, and inspection</dd>
+            </div>
+          </dl>
+        </aside>
+
+        <div class="case-sections">
+          <section class="detail-section">
+            <h2>Problem</h2>
+            <p>
+              The cell needed to automate a multi-operation CNC process while managing part flow, machine
+              availability, safety states, and inspection logic across multiple robots and lathes.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Architecture</h2>
+            <ul class="decision-list">
+              <li>Three robots coordinated with three CNC machines across sequential operations.</li>
+              <li>Robot-side hierarchical state machines handled process flow, recovery, and machine interaction.</li>
+              <li>PLC integration managed critical signals, permissives, interlocks, and cell-level behavior.</li>
+              <li>Safety systems and pneumatics were integrated into the machine tending process.</li>
+              <li>Inspection logic supported process validation before downstream operations.</li>
+            </ul>
+          </section>
+
+          <section class="detail-section">
+            <h2>Contribution</h2>
+            <p>
+              Owned end-to-end project development across design, programming, integration, commissioning,
+              troubleshooting, customer support, documentation, and training.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Engineering Judgment</h2>
+            <p>
+              The highest-value work was not a single program or component. It was structuring the cell so
+              each robot could make reliable decisions, recover predictably, and stay coordinated with the
+              CNC process without hiding failure modes from operators or maintenance teams.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Public Evidence Plan</h2>
+            <ul class="evidence-list">
+              <li>Recreated block diagram of robot, CNC, PLC, safety, and inspection flow.</li>
+              <li>Representative state-machine diagram using generic names.</li>
+              <li>ROBOGUIDE screenshot or recreated simulation only if approved.</li>
+              <li>Sanitized commissioning checklist and recovery flow.</li>
+            </ul>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>David Facio — Robotics & Automation Engineer</span>
+      <span>NDA-safe technical case study.</span>
+    </footer>
+  </body>
+</html>

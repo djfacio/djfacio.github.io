@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>David Facio — Lead Robotics & Automation Engineer</title>
+    <meta
+      name="description"
+      content="David Facio — Lead robotics and automation engineer. Portfolio of FANUC robotic cells, PLC controls, vision-guided CNC tending, safety, simulation, and end-to-end project delivery."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="David Facio — Lead Robotics & Automation Engineer" />
+    <meta
+      property="og:description"
+      content="40+ FANUC robotic cells from concept through commissioning. PLC controls, vision-guided CNC tending, safety systems, and end-to-end project delivery."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23f8c44f'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23161a1d'%3EDF%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Portfolio home">
+        <span class="brand-mark">DF</span>
+        <span class="brand-text">David Facio</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#work">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="#tools">Tools</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-visual" aria-hidden="true">
+          <div class="cell-grid">
+            <span class="machine machine-a"></span>
+            <span class="machine machine-b"></span>
+            <span class="machine machine-c"></span>
+            <span class="robot robot-a"></span>
+            <span class="robot robot-b"></span>
+            <span class="robot robot-c"></span>
+            <span class="vision vision-a"></span>
+            <span class="vision vision-b"></span>
+            <span class="flow flow-a"></span>
+            <span class="flow flow-b"></span>
+            <span class="flow flow-c"></span>
+          </div>
+        </div>
+        <div class="hero-content">
+          <p class="hero-name">David Facio</p>
+          <p class="eyebrow">Lead Robotics & Automation Engineer</p>
+          <h1>End-to-end robotic cell development from concept through commissioning.</h1>
+          <p class="hero-copy">
+            FANUC-focused robot integrator with deep experience in PLC-controlled machine tending,
+            machine vision, safety systems, EOAT, simulation, field commissioning, and customer handoff.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#work">View Case Studies</a>
+            <a class="button secondary" href="#skills">View Capabilities</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="Professional highlights">
+        <div>
+          <strong>40+</strong>
+          <span>FANUC cells built</span>
+        </div>
+        <div>
+          <strong>$1.2M</strong>
+          <span>largest project scale</span>
+        </div>
+        <div>
+          <strong>3</strong>
+          <span>robots in one system</span>
+        </div>
+        <div>
+          <strong>3</strong>
+          <span>regulated industries</span>
+        </div>
+      </section>
+
+      <section id="work" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Selected Work</p>
+          <h2>NDA-safe case studies</h2>
+          <p>
+            These summaries avoid customer names and proprietary details while preserving the engineering
+            decisions, system complexity, and integration scope.
+          </p>
+        </div>
+
+        <div class="case-grid">
+          <article class="case-card">
+            <div class="case-media cnc-media">
+              <span>CNC</span>
+              <span>Robot</span>
+              <span>Inspect</span>
+            </div>
+            <div class="case-body">
+              <p class="case-type">Vision-guided machine tending</p>
+              <h3>Three-robot CNC tending system for bone screw operations</h3>
+              <p>
+                Designed and integrated a multi-operation cell with three robots tending three CNC lathes.
+                The system used hierarchical robot state machines, safety integration, pneumatics, and inspection logic.
+              </p>
+              <ul class="tag-list">
+                <li>FANUC</li>
+                <li>CNC tending</li>
+                <li>State machines</li>
+                <li>Medical</li>
+              </ul>
+              <a class="case-link" href="case-study-cnc-tending.html">Read case study</a>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <div class="case-media dual-media">
+              <span>Vision</span>
+              <span>Tool Change</span>
+              <span>Deburr</span>
+            </div>
+            <div class="case-body">
+              <p class="case-type">Dual-purpose robotic cell</p>
+              <h3>Assembly and ultrasonic deburring cell with automatic tool change</h3>
+              <p>
+                Built a flexible cell with servo and pneumatic gripping, four-camera vision, Modbus-controlled feeders,
+                a regrip station, and an ultrasonic deburring process.
+              </p>
+              <ul class="tag-list">
+                <li>Tool change</li>
+                <li>Keyence vision</li>
+                <li>Modbus</li>
+                <li>Deburring</li>
+              </ul>
+              <a class="case-link" href="case-study-dual-purpose-cell.html">Read case study</a>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <div class="case-media standards-media">
+              <span>Spec</span>
+              <span>Generate</span>
+              <span>Deploy</span>
+            </div>
+            <div class="case-body">
+              <p class="case-type">Open-source robotics tooling</p>
+              <h3>FANUC AI TP Workflow: safety-gated robot program generation</h3>
+              <p>
+                A public, MIT-licensed toolchain that plans, generates, validates, and safely deploys
+                AI-assisted FANUC TP programs &mdash; including a hand-written Rust SNPX/SRTP controller
+                codec, JSON-schema validation, human approval gates, and CI.
+              </p>
+              <ul class="tag-list">
+                <li>FANUC TP</li>
+                <li>Rust</li>
+                <li>PowerShell</li>
+                <li>CI / Safety</li>
+              </ul>
+              <a class="case-link" href="case-study-fanuc-ai-tp.html">Read case study</a>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <div class="case-media standards-media">
+              <span>PLC</span>
+              <span>Robot</span>
+              <span>Safety</span>
+            </div>
+            <div class="case-body">
+              <p class="case-type">Reusable integration patterns</p>
+              <h3>Robot-to-PLC handshakes, safety, and recovery architecture</h3>
+              <p>
+                Applied four-way robot handshakes, critical command signals, non-critical flags, DCS,
+                safety controllers, fault recovery, auto/manual behavior, and operator-facing HMI flows.
+              </p>
+              <ul class="tag-list">
+                <li>EtherNet/IP</li>
+                <li>Profinet</li>
+                <li>Safety PLC</li>
+                <li>HMI</li>
+              </ul>
+              <p class="case-note">Cross-cutting patterns applied across the cells above — interactive simulator in progress.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="skills" class="section skill-band">
+        <div class="section-heading">
+          <p class="eyebrow">Capability Map</p>
+          <h2>Full robotic cell stack</h2>
+        </div>
+        <div class="skill-columns">
+          <div>
+            <h3>Robotics</h3>
+            <p>FANUC R-30iB Mate Plus, Mitsubishi, KUKA, ABB, Yaskawa, UR, Epson, ROBOGUIDE, RoboDK.</p>
+          </div>
+          <div>
+            <h3>Controls</h3>
+            <p>Allen-Bradley, Siemens, Delta, Codesys, Studio 5000, TIA Portal, WPLSoft, ISPSoft.</p>
+          </div>
+          <div>
+            <h3>Vision</h3>
+            <p>Keyence CV-X, XG-X, VS 2D, RB-series 3D, FANUC iRVision, calibration, offsets, inspection.</p>
+          </div>
+          <div>
+            <h3>Mechanical</h3>
+            <p>EOAT, grippers, fixtures, guarding, conveyors, feeders, presses, servo axes, pneumatics.</p>
+          </div>
+          <div>
+            <h3>Electrical</h3>
+            <p>Panel layout, wiring, schematics, IO checkout, drives, sensors, troubleshooting, safety circuits.</p>
+          </div>
+          <div>
+            <h3>Software</h3>
+            <p>Python, C#, .NET, JavaScript, TypeScript, SQL, OPC UA, MQTT, web dashboards, version control fundamentals.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="tools" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Process Artifacts</p>
+          <h2>Tools that show how I think through automation work</h2>
+          <p>
+            These are supporting artifacts, not the main portfolio story. They demonstrate how I structure
+            discovery, risk, commissioning readiness, and technical decision-making.
+          </p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-card">
+            <p class="case-type">Project readiness</p>
+            <h3>Robotic cell project assessment</h3>
+            <p>
+              A personal working tool for early project review, quoting support, design planning, and
+              commissioning readiness. It is included separately as evidence of engineering process.
+            </p>
+            <a class="case-link" href="tools-project-assessment.html">Open tool</a>
+          </article>
+          <article class="tool-card muted-tool">
+            <p class="case-type">Next build</p>
+            <h3>Robot-to-PLC handshake simulator</h3>
+            <p>
+              Planned tool for showing auto/manual modes, four-way handshake behavior, command signals,
+              fault recovery, and HMI-style status flow.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section growth-band">
+        <div class="section-heading">
+          <p class="eyebrow">Growth Plan</p>
+          <h2>Next skills to sharpen</h2>
+          <p>
+            The target is not to hide gaps. It is to turn them into visible learning projects that support
+            lead robotics, automation architecture, and hybrid-friendly roles.
+          </p>
+        </div>
+        <div class="growth-grid">
+          <div>
+            <h3>Industrial networking depth</h3>
+            <p>Managed switches, VLANs, NAT, segmentation, diagnostics, and industrial cybersecurity basics.</p>
+          </div>
+          <div>
+            <h3>SCADA and production data</h3>
+            <p>Ignition, historians, OEE dashboards, production reporting, and database-backed diagnostics.</p>
+          </div>
+          <div>
+            <h3>Reusable controls standards</h3>
+            <p>AOIs, UDTs, reusable FBs, PackML-style patterns, and version-controlled machine templates.</p>
+          </div>
+          <div>
+            <h3>Public proof</h3>
+            <p>Case studies, demo videos, architecture diagrams, technical writing, and hosted portfolio tools.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact-band">
+        <div>
+          <p class="eyebrow">Availability</p>
+          <h2>David Facio</h2>
+          <p>
+            Open to Lead Robotics & Automation Engineer, Senior Robotics Engineer, Robotics Project
+            Engineer, or Robotics Solutions Architect roles across North America and Europe.
+          </p>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:djfacio@gmail.com">djfacio@gmail.com</a>
+          <a href="https://www.linkedin.com/in/david-facio-robotics" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="https://github.com/djfacio" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>David Facio — Robotics & Automation Engineer</span>
+      <span>Built for end-to-end automation leadership roles.</span>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>David Facio | Robotic Cell Project Assessment</title>
+    <meta
+      name="description"
+      content="A project readiness assessment tool for robotic cell discovery, risk review, design planning, and commissioning preparation."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23f8c44f'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23161a1d'%3EDF%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html#top" aria-label="Portfolio home">
+        <span class="brand-mark">DF</span>
+        <span class="brand-text">David Facio</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="tool-hero">
+        <a class="breadcrumb dark-link" href="index.html#tools">Back to tools</a>
+        <p class="eyebrow">Professional Process Artifact</p>
+        <h1>Robotic cell project assessment</h1>
+        <p>
+          A personal working tool for early automation scoping. It organizes the questions I want answered
+          before design, quoting, risk review, controls architecture, and commissioning planning move too far downstream.
+        </p>
+      </section>
+
+      <section class="section tool-context">
+        <div class="section-heading">
+          <p class="eyebrow">Why This Exists</p>
+          <h2>Good robotic cells fail early or get expensive late when assumptions stay hidden.</h2>
+          <p>
+            This checklist turns those assumptions into visible engineering work: part variation, payload,
+            vision strategy, robot-to-PLC behavior, safety, electrical requirements, recovery cases, and
+            handoff documentation. It is not a replacement for a formal risk assessment, design review, or
+            customer specification.
+          </p>
+        </div>
+      </section>
+
+      <section id="assessment" class="section assessment-section">
+        <div class="assessment-layout">
+          <div class="assessment-intro">
+            <p class="eyebrow">Assessment Workspace</p>
+            <h2>Project readiness review</h2>
+            <p>
+              Use this as a structured first pass. A high score does not mean the project is approved;
+              it means fewer unknowns are blocking engineering review.
+            </p>
+            <div class="progress-panel">
+              <span id="progressText">0 of 0 complete</span>
+              <strong id="readinessScore">0% readiness</strong>
+              <div class="progress-track" aria-hidden="true">
+                <span id="progressBar"></span>
+              </div>
+            </div>
+            <div class="assessment-actions">
+              <button class="icon-button" id="resetChecklist" type="button" aria-label="Reset checklist" title="Reset checklist">
+                Reset
+              </button>
+              <button class="icon-button" id="exportChecklist" type="button" aria-label="Export checklist summary" title="Export checklist summary">
+                Export
+              </button>
+              <button class="icon-button" id="printChecklist" type="button" aria-label="Print checklist" title="Print checklist">
+                Print
+              </button>
+            </div>
+          </div>
+
+          <div class="assessment-workspace">
+            <form class="project-panel" aria-label="Project assessment details">
+              <label>
+                <span>Project</span>
+                <input data-project-field="project" type="text" placeholder="Machine tending cell" />
+              </label>
+              <label>
+                <span>Application</span>
+                <input data-project-field="application" type="text" placeholder="Vision-guided CNC tending" />
+              </label>
+              <label>
+                <span>Robot / PLC</span>
+                <input data-project-field="robotPlc" type="text" placeholder="FANUC + Allen-Bradley" />
+              </label>
+              <label>
+                <span>Vision / Sensors</span>
+                <input data-project-field="vision" type="text" placeholder="Keyence 2D vision" />
+              </label>
+              <label class="wide-field">
+                <span>Assessment Notes</span>
+                <textarea data-project-field="notes" rows="3" placeholder="Key risks, unknowns, customer standards, or follow-up questions"></textarea>
+              </label>
+            </form>
+
+            <div class="summary-strip" aria-live="polite">
+              <span id="riskBand">Needs discovery</span>
+              <span id="openItems">0 open items</span>
+              <span id="criticalSections">0 sections incomplete</span>
+            </div>
+
+            <div class="checklist" id="checklist" aria-label="Robotic cell project assessment checklist"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>David Facio — Robotics & Automation Engineer</span>
+      <span>Project assessment process artifact.</span>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

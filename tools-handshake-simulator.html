@@ -4,6 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>David Facio | Robot-to-PLC Handshake Simulator</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Robot-to-PLC Handshake Simulator — David Facio" />
+    <meta property="og:description" content="Interactive robot-to-PLC four-way handshake: auto/manual modes, command signals, fault/hold/recover/abort, HMI status, and a live signal timing chart." />
+    <meta property="og:url" content="https://djfacio.github.io/tools-handshake-simulator.html" />
+    <meta property="og:image" content="https://djfacio.github.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://djfacio.github.io/tools-handshake-simulator.html" />
     <meta
       name="description"
       content="Interactive robot-to-PLC four-way handshake simulator: auto/manual modes, command signals, non-critical flags, fault/hold/recover/abort states, HMI status, and a live signal timing chart."
@@ -56,9 +65,9 @@
 
       <section class="section sim-section" aria-label="Handshake simulator">
         <div class="sim-controls" role="group" aria-label="Simulator controls">
-          <div class="mode-switch" role="radiogroup" aria-label="Cycle mode">
-            <button type="button" class="mode-btn is-active" data-mode="auto" role="radio" aria-checked="true">Auto</button>
-            <button type="button" class="mode-btn" data-mode="manual" role="radio" aria-checked="false">Manual</button>
+          <div class="mode-switch" role="group" aria-label="Cycle mode">
+            <button type="button" class="mode-btn is-active" data-mode="auto" aria-pressed="true">Auto</button>
+            <button type="button" class="mode-btn" data-mode="manual" aria-pressed="false">Manual</button>
           </div>
           <div class="sim-buttons">
             <button type="button" class="icon-button" data-action="run">Run</button>
@@ -85,7 +94,7 @@
               <div><dt>Handshake phase</dt><dd data-readout="phase">Idle</dd></div>
               <div><dt>Cycles complete</dt><dd data-readout="cycles">0</dd></div>
             </dl>
-            <p class="hmi-message" data-readout="message">Press Run to start the tending cycle.</p>
+            <p class="hmi-message" data-readout="message" role="status" aria-live="polite">Press Run to start the tending cycle.</p>
           </div>
 
           <!-- Handshake diagram -->

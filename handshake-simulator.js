@@ -56,15 +56,18 @@
     { key: "HOLDREQ", label: "HOLD", color: "#b56b18" }
   ];
 
+  // Displayed phase labels map to the four handshake wires (internal phase ids
+  // skip 2 and 6, which are folded into transitions).
   var PHASE_TEXT = {
     0: "Ready",
     1: "1 · Request",
-    2: "2 · Acknowledge",
-    3: "3 · Executing",
-    4: "4 · Complete",
-    5: "5 · Clear request",
-    6: "6 · Clear flags"
+    3: "2 · Acknowledge",
+    4: "3 · Complete",
+    5: "4 · Clear"
   };
+
+  var reduceMotion =
+    !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
   // ---- state ------------------------------------------------------------
   var sig = {};
@@ -113,7 +116,7 @@
     els.stateChip = document.querySelector("[data-state-chip]");
     els.hb = document.querySelector("[data-hb]");
     els.canvas = document.querySelector("[data-chart]");
-    els.ctx = els.canvas.getContext("2d");
+    els.ctx = els.canvas ? els.canvas.getContext("2d") : null;
     els.readout = {};
     ["mode", "command", "phase", "cycles", "message"].forEach(function (k) {
       els.readout[k] = document.querySelector('[data-readout="' + k + '"]');
@@ -277,7 +280,7 @@
     document.querySelectorAll(".mode-btn").forEach(function (b) {
       var on = b.dataset.mode === mode;
       b.classList.toggle("is-active", on);
-      b.setAttribute("aria-checked", on ? "true" : "false");
+      b.setAttribute("aria-pressed", on ? "true" : "false");
     });
     document.querySelector('[data-action="step"]').disabled = mode !== "manual";
     if (mode === "manual" && state === "RUN") {
@@ -287,6 +290,7 @@
 
   // ---- tick -------------------------------------------------------------
   function tick() {
+    if (document.hidden) return; // don't burn CPU/battery in background tabs
     heartbeat = !heartbeat;
     if (sig.RESET) sig.RESET = false; // momentary pulse
     if (mode === "auto" && state === "RUN") {
@@ -311,7 +315,7 @@
       state === "IDLE" || state === "ABORTED" ? "—" : currentCommand().label;
     els.readout.phase.textContent = phaseLabel();
     els.readout.cycles.textContent = String(cycles);
-    els.hb.classList.toggle("beat", heartbeat && state !== "ABORTED");
+    els.hb.classList.toggle("beat", (reduceMotion ? true : heartbeat) && state !== "ABORTED");
 
     updateLeds("plc", PLC_SIGNALS);
     updateLeds("robot", ROBOT_SIGNALS);
@@ -365,9 +369,25 @@
     els.robotNode.classList.toggle("is-fault", sig.FAULT);
   }
 
+  // Scale the canvas backing store to the device pixel ratio so traces/text
+  // stay sharp on retina and mobile screens. Drawing then happens in CSS px.
+  function sizeCanvas() {
+    var c = els.canvas;
+    if (!c || !els.ctx) return;
+    var cssW = c.getBoundingClientRect().width || 900;
+    var cssH = cssW * (240 / 900);
+    var dpr = window.devicePixelRatio || 1;
+    c.width = Math.round(cssW * dpr);
+    c.height = Math.round(cssH * dpr);
+    els.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    els.cssW = cssW;
+    els.cssH = cssH;
+  }
+
   function drawChart() {
     var ctx = els.ctx;
-    var W = els.canvas.width, H = els.canvas.height;
+    if (!ctx) return;
+    var W = els.cssW || els.canvas.width, H = els.cssH || els.canvas.height;
     var gutter = 60;
     var rows = CHART_ROWS.length;
     var rowH = H / rows;
@@ -431,14 +451,24 @@
 
   function init() {
     cacheEls();
+    if (!els.canvas) return; // this script is only meaningful on the simulator page
     buildLeds(document.querySelector('[data-signals="plc"]'), PLC_SIGNALS);
     buildLeds(document.querySelector('[data-signals="robot"]'), ROBOT_SIGNALS);
     buildLeds(document.querySelector('[data-signals="flags"]'), FLAG_SIGNALS);
     resetSignals();
     setMode("auto");
     bindControls();
+    sizeCanvas();
     render();
     setInterval(tick, TICK_MS);
+    var resizeTimer;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        sizeCanvas();
+        drawChart();
+      }, 150);
+    });
   }
 
   if (document.readyState === "loading") {

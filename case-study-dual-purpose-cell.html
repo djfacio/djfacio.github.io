@@ -66,7 +66,11 @@
             </div>
             <div>
               <dt>Vision</dt>
-              <dd>Four-camera system</dd>
+              <dd>Keyence XG-X, four cameras (3 locate + 1 deburr)</dd>
+            </div>
+            <div>
+              <dt>Changeover</dt>
+              <dd>~20 s automatic tool change</dd>
             </div>
             <div>
               <dt>Communication</dt>
@@ -105,6 +109,15 @@
           </section>
 
           <section class="detail-section">
+            <h2>Results</h2>
+            <ul class="decision-list">
+              <li>Switched between assembly and deburring modes in ~20 s via automatic tool change &mdash; two processes on one robot platform.</li>
+              <li>Three vision cameras located parts fast enough to hold the 20 s assembly takt; a fourth handled feature location for deburring.</li>
+              <li>Regrip station and process-specific EOAT kept the flexible cell recoverable and operator-friendly across both modes.</li>
+            </ul>
+          </section>
+
+          <section class="detail-section">
             <h2>Engineering Judgment</h2>
             <p>
               The core challenge was making flexibility manageable. The cell had to change tools and process modes
@@ -113,13 +126,63 @@
           </section>
 
           <section class="detail-section">
-            <h2>Public Evidence Plan</h2>
-            <ul class="evidence-list">
-              <li>Generic architecture diagram for tool change, vision, feeders, and regrip flow.</li>
-              <li>Sanitized sequence diagram for process mode selection.</li>
-              <li>Representative HMI flow recreated without customer data.</li>
-              <li>Original demonstration of risk and readiness assessment using a separate process tool.</li>
-            </ul>
+            <h2>System Diagram</h2>
+            <p>Sanitized architecture — a generic representation of the two-mode flow, with no customer data.</p>
+            <div class="case-diagram">
+              <svg viewBox="0 0 920 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram: Modbus feeders supply a single FANUC LR Mate 200iD/7L robot with an automatic tool changer. In assembly mode, three Keyence cameras locate parts at the 20-second takt feeding an assembly station; in deburring mode, a fourth camera locates features feeding an ultrasonic deburring tool. A regrip station supports both. A Delta PLC coordinates feeders, grippers, and mode logic, with about 20-second automatic changeover between modes.">
+                <defs>
+                  <marker id="arw2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5d6975" /></marker>
+                </defs>
+                <style>
+                  .m1{font:700 13px Inter,system-ui,sans-serif;fill:#161a1d}
+                  .m2{font:600 11px Inter,system-ui,sans-serif;fill:#5d6975}
+                  .mode{font:800 10px Inter,system-ui,sans-serif}
+                  .f2{stroke:#5d6975;stroke-width:2.5;fill:none;marker-end:url(#arw2)}
+                </style>
+                <!-- badge -->
+                <rect x="270" y="6" width="380" height="34" rx="9" fill="#101820" />
+                <text x="460" y="28" text-anchor="middle" style="font:700 12px Inter,sans-serif" fill="#f8c44f">One platform, two processes &#183; ~20 s automatic changeover</text>
+                <!-- mode labels -->
+                <text x="470" y="70" class="mode" fill="#2a8c63">ASSEMBLY MODE</text>
+                <text x="470" y="214" class="mode" fill="#b56b18">DEBURRING MODE</text>
+                <!-- feeders -->
+                <rect x="20" y="152" width="140" height="56" rx="8" fill="#f4f7f9" stroke="#2f4858" stroke-width="2" />
+                <text x="90" y="176" text-anchor="middle" class="m1">Modbus feeders</text>
+                <text x="90" y="192" text-anchor="middle" class="m2">voice-coil</text>
+                <!-- robot -->
+                <rect x="200" y="140" width="176" height="80" rx="10" fill="#fdf3d6" stroke="#161a1d" stroke-width="2" />
+                <text x="288" y="170" text-anchor="middle" class="m1">FANUC LR Mate</text>
+                <text x="288" y="186" text-anchor="middle" class="m1">200iD/7L</text>
+                <text x="288" y="204" text-anchor="middle" class="m2">automatic tool changer</text>
+                <!-- assembly branch -->
+                <rect x="470" y="78" width="188" height="54" rx="8" fill="#eaf1fb" stroke="#1f6feb" stroke-width="2" />
+                <text x="564" y="101" text-anchor="middle" class="m1">Keyence 3-cam vision</text>
+                <text x="564" y="118" text-anchor="middle" class="m2">locate at 20 s takt</text>
+                <rect x="700" y="78" width="170" height="54" rx="8" fill="#eaf3ee" stroke="#2a8c63" stroke-width="2" />
+                <text x="785" y="101" text-anchor="middle" class="m1">Assembly</text>
+                <text x="785" y="118" text-anchor="middle" class="m2">screw + washer</text>
+                <!-- deburr branch -->
+                <rect x="470" y="222" width="188" height="54" rx="8" fill="#eaf1fb" stroke="#1f6feb" stroke-width="2" />
+                <text x="564" y="245" text-anchor="middle" class="m1">4th camera</text>
+                <text x="564" y="262" text-anchor="middle" class="m2">feature locate</text>
+                <rect x="700" y="222" width="170" height="54" rx="8" fill="#faf0e2" stroke="#b56b18" stroke-width="2" />
+                <text x="785" y="245" text-anchor="middle" class="m1">Ultrasonic</text>
+                <text x="785" y="262" text-anchor="middle" class="m2">deburr</text>
+                <!-- regrip -->
+                <rect x="200" y="250" width="176" height="46" rx="8" fill="#f4f7f9" stroke="#2f4858" stroke-width="2" />
+                <text x="288" y="278" text-anchor="middle" class="m1">Regrip station</text>
+                <!-- flows -->
+                <path class="f2" d="M160,180 L196,180" />
+                <path class="f2" d="M377,166 L466,108" />
+                <path class="f2" d="M377,196 L466,246" />
+                <path class="f2" d="M658,105 L696,105" />
+                <path class="f2" d="M658,249 L696,249" />
+                <line x1="288" y1="220" x2="288" y2="250" stroke="#9aa7b1" stroke-width="1.5" />
+                <!-- PLC bar -->
+                <rect x="20" y="322" width="850" height="38" rx="8" fill="#2f4858" />
+                <text x="445" y="346" text-anchor="middle" style="font:700 12px Inter,sans-serif" fill="#ffffff">Delta DVP-ES3 PLC &#183; Modbus feeders &#183; servo / pneumatic grippers &#183; mode logic</text>
+              </svg>
+            </div>
           </section>
         </div>
       </section>

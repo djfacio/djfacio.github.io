@@ -932,6 +932,19 @@ h3 {
   margin-bottom: 10px;
 }
 
+.case-diagram {
+  margin: 10px 0 0;
+  padding-bottom: 6px;
+  overflow-x: auto;
+}
+
+.case-diagram svg {
+  display: block;
+  width: 100%;
+  min-width: 660px;
+  height: auto;
+}
+
 /* ===== Robot-to-PLC handshake simulator ===== */
 .sim-section {
   padding-top: 8px;

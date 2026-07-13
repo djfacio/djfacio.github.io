@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>David Facio | Robot-to-PLC Handshake Simulator</title>
+    <meta
+      name="description"
+      content="Interactive robot-to-PLC four-way handshake simulator: auto/manual modes, command signals, non-critical flags, fault/hold/recover/abort states, HMI status, and a live signal timing chart."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23f8c44f'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23161a1d'%3EDF%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html#top" aria-label="Portfolio home">
+        <span class="brand-mark">DF</span>
+        <span class="brand-text">David Facio</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="tool-hero">
+        <a class="breadcrumb dark-link" href="index.html#tools">Back to tools</a>
+        <p class="eyebrow">Interactive Controls Demo</p>
+        <h1>Robot-to-PLC handshake simulator</h1>
+        <p>
+          A live model of the four-way handshake I use to coordinate a FANUC robot with a PLC during
+          machine tending &mdash; request, acknowledge, complete, and clear &mdash; with auto/manual
+          modes, non-critical status flags, and fault, hold, recover, and abort behavior. It runs entirely
+          in your browser with original code; no customer logic is exposed.
+        </p>
+      </section>
+
+      <section class="section tool-context">
+        <div class="section-heading">
+          <p class="eyebrow">Why A Four-Way Handshake</p>
+          <h2>Neither side moves until the other confirms &mdash; so no edge is ever missed.</h2>
+          <p>
+            A two-way pulse can be lost if one controller scans slower than the other. A four-way handshake
+            makes every transition wait for confirmation: the PLC requests, the robot acknowledges, the robot
+            reports complete, then the PLC clears the request before the robot clears its flags. That
+            interlock is what keeps a cell recoverable when something stalls mid-cycle.
+          </p>
+        </div>
+      </section>
+
+      <section class="section sim-section" aria-label="Handshake simulator">
+        <div class="sim-controls" role="group" aria-label="Simulator controls">
+          <div class="mode-switch" role="radiogroup" aria-label="Cycle mode">
+            <button type="button" class="mode-btn is-active" data-mode="auto" role="radio" aria-checked="true">Auto</button>
+            <button type="button" class="mode-btn" data-mode="manual" role="radio" aria-checked="false">Manual</button>
+          </div>
+          <div class="sim-buttons">
+            <button type="button" class="icon-button" data-action="run">Run</button>
+            <button type="button" class="icon-button ghost" data-action="hold">Hold</button>
+            <button type="button" class="icon-button ghost" data-action="step" disabled>Step</button>
+            <button type="button" class="icon-button warn" data-action="fault">Inject Fault</button>
+            <button type="button" class="icon-button ghost" data-action="reset">Reset</button>
+            <button type="button" class="icon-button ghost" data-action="recover">Recover</button>
+            <button type="button" class="icon-button danger" data-action="abort">Abort</button>
+          </div>
+        </div>
+
+        <div class="sim-grid">
+          <!-- HMI status -->
+          <div class="sim-panel hmi-panel">
+            <div class="panel-title">
+              <span>HMI Status</span>
+              <span class="hb" data-hb aria-label="Comms heartbeat"></span>
+            </div>
+            <div class="hmi-state" data-state-chip>IDLE</div>
+            <dl class="hmi-readout">
+              <div><dt>Mode</dt><dd data-readout="mode">Auto</dd></div>
+              <div><dt>Command</dt><dd data-readout="command">&mdash;</dd></div>
+              <div><dt>Handshake phase</dt><dd data-readout="phase">Idle</dd></div>
+              <div><dt>Cycles complete</dt><dd data-readout="cycles">0</dd></div>
+            </dl>
+            <p class="hmi-message" data-readout="message">Press Run to start the tending cycle.</p>
+          </div>
+
+          <!-- Handshake diagram -->
+          <div class="sim-panel node-panel">
+            <div class="panel-title"><span>Four-Way Handshake</span></div>
+            <div class="node-diagram">
+              <div class="node plc-node" data-node="plc">
+                <span class="node-tag">PLC</span>
+                <span class="node-sub">Cell controller</span>
+              </div>
+              <div class="node-wires">
+                <div class="wire" data-wire="req"><span class="wire-label">1 &middot; REQUEST</span><span class="wire-arrow to-robot"></span></div>
+                <div class="wire" data-wire="ack"><span class="wire-label">2 &middot; ACK</span><span class="wire-arrow to-plc"></span></div>
+                <div class="wire" data-wire="done"><span class="wire-label">3 &middot; COMPLETE</span><span class="wire-arrow to-plc"></span></div>
+                <div class="wire" data-wire="clear"><span class="wire-label">4 &middot; CLEAR</span><span class="wire-arrow to-robot"></span></div>
+              </div>
+              <div class="node robot-node" data-node="robot">
+                <span class="node-tag">ROBOT</span>
+                <span class="node-sub">FANUC R-30iB</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Signals -->
+          <div class="sim-panel signal-panel">
+            <div class="panel-title"><span>PLC &rarr; Robot (outputs)</span></div>
+            <ul class="led-list" data-signals="plc"></ul>
+          </div>
+          <div class="sim-panel signal-panel">
+            <div class="panel-title"><span>Robot &rarr; PLC (inputs)</span></div>
+            <ul class="led-list" data-signals="robot"></ul>
+          </div>
+
+          <!-- Non-critical flags -->
+          <div class="sim-panel signal-panel flags-panel">
+            <div class="panel-title"><span>Non-critical status flags</span></div>
+            <ul class="led-list" data-signals="flags"></ul>
+          </div>
+
+          <!-- Timing chart -->
+          <div class="sim-panel chart-panel">
+            <div class="panel-title"><span>Signal timing chart</span><span class="chart-hint">newest &rarr;</span></div>
+            <canvas data-chart width="900" height="240" role="img" aria-label="Rolling logic-analyzer chart of key handshake signals"></canvas>
+          </div>
+        </div>
+
+        <p class="sim-note">
+          Original demonstration logic. Signal names, the command sequence, and timing are illustrative of
+          general integration practice and do not represent any specific customer's program.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>David Facio — Robotics & Automation Engineer</span>
+      <span>Interactive controls demonstration.</span>
+    </footer>
+
+    <script src="handshake-simulator.js"></script>
+  </body>
+</html>

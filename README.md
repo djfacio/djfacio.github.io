@@ -1,27 +1,36 @@
 # David Facio — Robotics & Automation Portfolio
 
-Static portfolio site for a Lead Robotics & Automation Engineer profile:
-FANUC robotic cells, PLC controls, vision-guided CNC tending, safety systems,
-simulation, and end-to-end project delivery.
+Source for **https://djfacio.github.io** — a portfolio of FANUC robotic cells, PLC controls,
+vision-guided CNC tending, safety systems, and end-to-end project delivery.
 
-Live site: https://djfacio.github.io
+Static HTML/CSS/JS, no build step, published from `main` via GitHub Pages.
 
 ## Pages
 
-- `index.html` — main portfolio
-- `case-study-cnc-tending.html` — NDA-safe three-robot CNC tending case study
-- `case-study-dual-purpose-cell.html` — NDA-safe dual-purpose cell case study
-- `case-study-fanuc-ai-tp.html` — open-source FANUC AI TP Workflow project
-  (links to https://github.com/djfacio/fanuc-ai-tp)
-- `tools-project-assessment.html` — robotic cell project assessment tool
+| Page | Contents |
+| --- | --- |
+| `index.html` | Main portfolio |
+| `case-study-gt-force-32.html` | Machine-mounted robot loader for a gang-tool CNC lathe (IMTS 2024) |
+| `case-study-dbr-m8.html` | Recipe-driven robotic deburring cell (IMTS 2024) |
+| `case-study-cnc-tending.html` | Three-robot CNC tending system, bone-screw operations |
+| `case-study-dual-purpose-cell.html` | Assembly and ultrasonic deburring cell with automatic tool change |
+| `case-study-fanuc-ai-tp.html` | Open-source FANUC AI TP Workflow ([repo](https://github.com/djfacio/fanuc-ai-tp)) |
+| `robot-programming-example.html` | Sanitized FANUC TP program structure and safe-return homing |
+| `tools-handshake-simulator.html` | Interactive robot-to-PLC four-way handshake simulator |
+| `tools-project-assessment.html` | Robotic cell project assessment checklist |
 
 ## Local preview
 
-Open `index.html` directly in a browser, or serve the folder:
-`python -m http.server 8000` then visit `http://127.0.0.1:8000`.
+```
+python -m http.server 8000
+```
 
-## Deploying
+Then open http://127.0.0.1:8000.
 
-This is a plain static site (no build step). It is published via GitHub Pages
-from this repository's `main` branch. See `DEPLOY.md` for details and
-alternative hosts.
+## Publishing rules
+
+Photographs are limited to publicly exhibited machines (IMTS 2024), FANUC Academy training, and
+own-bench hardware. All published images are derived from metadata-stripped copies. Customer names,
+parts, drawings, and process data do not appear anywhere in this repository.
+
+Contact: djfacio@gmail.com · [LinkedIn](https://www.linkedin.com/in/david-facio-robotics)

@@ -19,7 +19,7 @@
     />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23f8c44f'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23161a1d'%3EDF%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%230f6f88'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EDF%3C/text%3E%3C/svg%3E"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -31,6 +31,7 @@
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
         <a href="index.html#work">Work</a>
+        <a href="index.html#about">About</a>
         <a href="index.html#skills">Skills</a>
         <a href="index.html#tools">Tools</a>
         <a href="index.html#contact">Contact</a>
@@ -43,8 +44,9 @@
         <p class="eyebrow">Vision-Guided Machine Tending</p>
         <h1>Three-robot CNC tending system for multi-operation bone screw manufacturing.</h1>
         <p>
-          NDA-safe summary of a robotic cell with three robots tending three CNC lathes across sequential
-          operations, using hierarchical robot state machines, safety integration, pneumatics, and inspection.
+          Three robots tending three CNC lathes across sequential bone-screw operations, using hierarchical
+          robot state machines, safety integration, pneumatics, and in-line inspection. Customer identity and
+          process details are withheld.
         </p>
       </section>
 
@@ -77,6 +79,10 @@
               <dd>95% at SAT</dd>
             </div>
             <div>
+              <dt>Repeat orders</dt>
+              <dd>7 ordered · 5 delivered · 2 in build · path to 12</dd>
+            </div>
+            <div>
               <dt>Core challenge</dt>
               <dd>Coordinated tending, state control, recovery, and inspection</dd>
             </div>
@@ -87,8 +93,16 @@
           <section class="detail-section">
             <h2>Problem</h2>
             <p>
-              The cell needed to automate a multi-operation CNC process while managing part flow, machine
-              availability, safety states, and inspection logic across multiple robots and lathes.
+              Bone screws were being produced on a Swiss lathe at roughly ten minutes a part, from bar
+              stock, as a single long operation. The volume the customer wanted could not be reached by
+              running that process faster.
+            </p>
+            <p>
+              Splitting it across three shorter operations makes the arithmetic work, but only if the parts
+              move between three machines without a person carrying them, and only if a part that fails
+              inspection is caught before it consumes time on the next lathe. That is the actual problem:
+              not the machining, but the part flow, the machine availability, and the failure handling
+              between them.
             </p>
           </section>
 
@@ -114,18 +128,63 @@
           <section class="detail-section">
             <h2>Results</h2>
             <ul class="decision-list">
-              <li>Produced a finished bone screw every ~50 s &mdash; roughly 12&times; the throughput of the prior Swiss-lathe process (~10 min/part).</li>
+              <li>One cell replaced the prior process at roughly 12&times; the output &mdash; a finished bone screw every ~50 s against ~10 min/part on the Swiss lathe it displaced.</li>
               <li>Held 95% uptime at SAT with predictable fault recovery across the three-robot, three-lathe flow.</li>
-              <li>Automated in-line length inspection (IO-Link SIKO) of blanks and finished screws before downstream operations.</li>
+              <li>Automated in-line length inspection of blanks and finished screws before downstream operations.</li>
+              <li><strong>The customer has since ordered the same system seven times</strong> &mdash; five delivered, two under purchase order and in build, against a potential twelve.</li>
             </ul>
+            <p>
+              The cell works from blanks rather than bar stock. The customer was already producing blanks
+              in-house for other processes, so the design consumes capability they had rather than asking
+              them to buy new capability &mdash; which is a large part of why the numbers closed.
+            </p>
           </section>
 
           <section class="detail-section">
-            <h2>Engineering Judgment</h2>
+            <h2>What the environment did to the first design</h2>
             <p>
-              The highest-value work was not a single program or component. It was structuring the cell so
-              each robot could make reliable decisions, recover predictably, and stay coordinated with the
-              CNC process without hiding failure modes from operators or maintenance teams.
+              The cell gauges length twice &mdash; once on the incoming blank, once on the finished screw.
+              The original gauges used SMAC linear voice-coil actuators, and they passed FAT and SAT and ran
+              correctly in production.
+            </p>
+            <p>
+              A few weeks in, oil mist began reaching the actuator encoders. It was never a stoppage, which
+              is what made it insidious: the customer simply absorbed it, cleaning and swapping units for
+              months as a maintenance nuisance rather than raising it as a failure.
+            </p>
+            <p>
+              The miss was mine and it was an environmental one. Oil mist carried further through that
+              facility than we had accounted for &mdash; it was not confined to the machines producing it
+              &mdash; and I had specified the actuator against its stated environmental rating rather than
+              against the air the machine was actually going to live in. A datasheet describes a component;
+              it does not describe a plant.
+            </p>
+            <p>
+              I went back at the design anyway. The replacement drives a SIKO magnetic encoder with a
+              pneumatic actuator &mdash; no optical path and nothing for the mist to contaminate. I proposed
+              it, designed it, built it, and tested it; it has held up in the same environment since. It
+              shipped as standard from the fifth machine onward, and the customer chose to pay for the
+              retrofit on the four already accepted.
+            </p>
+            <p>
+              Two lessons I kept. A machine passing acceptance testing does not mean the design survived the
+              environment &mdash; SAT happens before the plant has had time to do its worst. And the customer
+              had quietly decided to live with a defect rather than report it, so finding it required paying
+              attention to their maintenance behavior rather than their fault log.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>What mattered most</h2>
+            <p>
+              Three robots sharing one part flow means the failure cases outnumber the happy path. Most of
+              the work went into structuring the cell so each robot could decide on its own, recover to a
+              known state, and stay in step with the lathes &mdash; and so that when something did go wrong,
+              operators and maintenance could see which stage it happened in.
+            </p>
+            <p>
+              That structure is also what made the design repeatable. A cell built around one customer's
+              exact part would not have been ordered seven times.
             </p>
           </section>
 
@@ -144,8 +203,8 @@
                   .cn{stroke:#9aa7b1;stroke-width:1.5}
                 </style>
                 <!-- throughput badge -->
-                <rect x="250" y="8" width="420" height="54" rx="10" fill="#101820" />
-                <text x="460" y="31" text-anchor="middle" font="700 13px Inter,sans-serif" fill="#f8c44f" style="font:700 13px Inter,sans-serif">~50 s per finished screw &#183; 95% uptime at SAT</text>
+                <rect x="250" y="8" width="420" height="54" rx="10" fill="#0c1622" />
+                <text x="460" y="31" text-anchor="middle" font="700 13px Inter,sans-serif" fill="#7fd6cb" style="font:700 13px Inter,sans-serif">~50 s per finished screw &#183; 95% uptime at SAT</text>
                 <text x="460" y="49" text-anchor="middle" fill="#cdd6dd" style="font:600 12px Inter,sans-serif">~12&#215; throughput vs. prior Swiss-lathe process</text>
                 <!-- safety cell -->
                 <rect x="152" y="110" width="592" height="100" rx="10" fill="none" stroke="#a6423a" stroke-width="2" stroke-dasharray="7 6" />
@@ -163,7 +222,7 @@
                 <rect x="464" y="132" width="128" height="56" rx="8" fill="#eaf3ee" stroke="#2a8c63" stroke-width="2" />
                 <text x="528" y="158" text-anchor="middle" class="n1">CNC Lathe</text>
                 <text x="528" y="174" text-anchor="middle" class="n2">Op 3 &#183; Robot</text>
-                <rect x="616" y="132" width="128" height="56" rx="8" fill="#eaf1fb" stroke="#1f6feb" stroke-width="2" />
+                <rect x="616" y="132" width="128" height="56" rx="8" fill="#e6f1f3" stroke="#0f6f88" stroke-width="2" />
                 <text x="680" y="158" text-anchor="middle" class="n1">Length inspect</text>
                 <text x="680" y="174" text-anchor="middle" class="n2">IO-Link SIKO</text>
                 <rect x="768" y="132" width="128" height="56" rx="8" fill="#f4f7f9" stroke="#2f4858" stroke-width="2" />
@@ -191,7 +250,7 @@
 
     <footer class="site-footer">
       <span>David Facio — Robotics & Automation Engineer</span>
-      <span>NDA-safe technical case study.</span>
+      <span>Customer and process details withheld.</span>
     </footer>
   </body>
 </html>

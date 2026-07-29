@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>David Facio | Force-Controlled Robotic Deburring Cell Case Study</title>
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Force-Controlled Robotic Deburring Cell — David Facio" />
+    <meta property="og:description" content="Case study: a recipe-driven robotic deburring cell using force control, a Mitsubishi six-axis robot, machine vision, custom part feeding, and integrated dust collection. Exhibited at IMTS 2024." />
+    <meta property="og:url" content="https://djfacio.github.io/case-study-dbr-m8.html" />
+    <meta property="og:image" content="https://djfacio.github.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://djfacio.github.io/case-study-dbr-m8.html" />
+    <meta
+      name="description"
+      content="Case study for a force-controlled robotic deburring cell: Mitsubishi six-axis robot, force/torque sensing, machine vision, custom part feeding, recipe-driven operator screens, and integrated dust collection."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%230f6f88'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EDF%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html#top" aria-label="Portfolio home">
+        <span class="brand-mark">DF</span>
+        <span class="brand-text">David Facio</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="case-page">
+      <section class="case-hero-detail dbr-detail">
+        <a class="breadcrumb" href="index.html#work">Back to work</a>
+        <p class="eyebrow">Force-Controlled Finishing</p>
+        <h1>Recipe-driven robotic deburring cell for fastener and connector work.</h1>
+        <p>
+          A self-contained deburring, polishing, and finishing cell built around force control: a six-axis
+          robot manipulates the part against fixed tool stations while a force/torque sensor governs contact
+          at the edge, and operators create new recipes within a part family without writing robot programs.
+          Exhibited publicly at IMTS 2024 in Chicago.
+        </p>
+      </section>
+
+      <section class="case-detail-grid">
+        <aside class="case-facts">
+          <h2>System Snapshot</h2>
+          <dl>
+            <div>
+              <dt>Industry</dt>
+              <dd>Fastener &amp; connector manufacturing</dd>
+            </div>
+            <div>
+              <dt>Application</dt>
+              <dd>Deburring, polishing, finishing</dd>
+            </div>
+            <div>
+              <dt>Robot</dt>
+              <dd>Mitsubishi six-axis (FANUC also offered)</dd>
+            </div>
+            <div>
+              <dt>Process control</dt>
+              <dd>Force/torque sensing &mdash; controlled edge contact at speed</dd>
+            </div>
+            <div>
+              <dt>Tool stations</dt>
+              <dd>Abrasive brush and wheel; live tools, cut-off disc, bench and belt grinder available</dd>
+            </div>
+            <div>
+              <dt>Part presentation</dt>
+              <dd>Custom part feeder and nest fixture</dd>
+            </div>
+            <div>
+              <dt>Vision</dt>
+              <dd>Keyence &mdash; inspection or robot guidance</dd>
+            </div>
+            <div>
+              <dt>Containment</dt>
+              <dd>Industrial dust collection inside the same enclosure</dd>
+            </div>
+            <div>
+              <dt>Exhibited</dt>
+              <dd>IMTS 2024, Chicago</dd>
+            </div>
+          </dl>
+        </aside>
+
+        <div class="case-sections">
+          <section class="detail-section">
+            <h2>Problem</h2>
+            <p>
+              In a lot of machine shops the deburring bench is the bottleneck. Cutting is automated and
+              measured; finishing is a person with a file, a brush wheel, and a subjective standard. It is
+              slow, it varies between operators and between shifts, and it is the step most likely to send a
+              part back.
+            </p>
+            <p>
+              Automating it is harder than automating a pick-and-place because the process is defined by
+              contact, not position. A path taught in pure position control either misses the edge when the
+              part sits a few thousandths high, or digs in and burns when it sits low &mdash; and stock
+              removal varies with wheel wear over a shift.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Architecture</h2>
+            <ul class="decision-list">
+              <li>
+                A six-axis robot carries the <em>part</em> to fixed tool stations rather than carrying a tool
+                to the part &mdash; the heavy, dirty, vibrating equipment stays bolted down and only the
+                lightweight part moves.
+              </li>
+              <li>
+                A force/torque sensor closes the loop on contact, so the robot applies a commanded force at
+                the edge instead of driving to a commanded position. Position error and wheel wear are
+                absorbed by the force loop.
+              </li>
+              <li>
+                Multiple tool stations inside one enclosure let a single part visit brush, wheel, or grinder
+                in sequence without leaving the cell or being re-fixtured.
+              </li>
+              <li>
+                A custom part feeder and nest fixture present parts in a known orientation, with machine
+                vision available for inspection or to guide the robot to the part.
+              </li>
+              <li>
+                Dust collection is built into the same enclosure, which keeps abrasive debris off the
+                shop floor and out of the robot's joints.
+              </li>
+              <li>
+                A dedicated operator screen holds the deburring sequences as recipes, so a new part within a
+                family is a data change rather than a robot program.
+              </li>
+            </ul>
+          </section>
+
+          <section class="detail-section">
+            <h2>Why Force Control Is the Whole Design</h2>
+            <p>
+              Force control is what lets the rest of the cell be simple. Because contact force is regulated,
+              the part nest does not need to hold micron-level repeatability, the tool stations do not need
+              compensating slides, and the recipe does not need re-teaching every time a wheel wears down.
+              The compliance that a human hand provides naturally is provided by the sensor loop.
+            </p>
+            <p>
+              It also decouples quality from speed. The robot can move between stations fast, because the
+              only place precision is required is at the moment of contact &mdash; and there, precision is
+              being enforced by force feedback rather than by how carefully the path was taught.
+            </p>
+            <div class="case-gallery">
+              <figure class="case-figure tall">
+                <img src="img/dbr-m8-interior.jpg" alt="Six-axis robot inside the deburring cell holding a brass fitting against a finishing station, with a parts nest and overhead machine-vision camera" loading="lazy" width="1000" height="1778" />
+                <figcaption>Robot presenting a brass fitting to a finishing station, parts nest at right.</figcaption>
+              </figure>
+              <figure class="case-figure tall">
+                <img src="img/dbr-m8-station.jpg" alt="Close view of an abrasive brush finishing station inside the robotic deburring cell" loading="lazy" width="1000" height="1778" />
+                <figcaption>Fixed abrasive station &mdash; tooling stays mounted, the part comes to it.</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="detail-section">
+            <h2>Operator Model</h2>
+            <p>
+              The cell is aimed at shops that do not employ a robot programmer. That constraint drove the
+              interface: deburring sequences are stored as recipes tied to a part family, and adding a
+              similar part means entering its parameters, not opening a teach pendant.
+            </p>
+            <p>
+              A cell that requires the integrator to come back for every new part number quietly stops
+              being used, and nobody files a complaint about it &mdash; it just sits.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Contribution</h2>
+            <p>
+              I worked on the controls and robotics side of the cell &mdash; robot programming and motion,
+              force-control behavior, vision setup, part feeding and fixturing integration, safety
+              configuration, operator screen flows, and commissioning and live demonstration at the show.
+            </p>
+            <p>
+              The DBR-M8 is a Cubic Machinery product built by a team. My scope was the controls and
+              robotics; the mechanical design, enclosure, and product engineering were colleagues' work.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Why the part moves, not the tool</h2>
+            <p>
+              This is the decision that shapes everything downstream. It costs payload capacity and limits
+              part size, and for large workpieces it would be the wrong call.
+            </p>
+            <p>
+              For fasteners and connectors &mdash; small, numerous, and handled in families &mdash; it pays
+              back immediately: one robot reaches many processes, spindles and grinders stay rigidly mounted
+              where their vibration does no harm, dust extraction has one fixed place to pull from, and
+              adding a process to the cell means adding a station rather than redesigning the end effector.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>The Cell</h2>
+            <div class="case-gallery">
+              <figure class="case-figure wide">
+                <img src="img/dbr-m8-cell.jpg" alt="Fully guarded robotic deburring cell with glass panels, green status light bar, external operator monitor and teach pendant" loading="lazy" width="1000" height="1778" />
+                <figcaption>
+                  Self-contained cell: guarding, status light, dust collection, operator station, and vision
+                  in a single enclosure sized for a machine shop floor.
+                </figcaption>
+              </figure>
+            </div>
+            <p class="photo-note">
+              Photographs taken at the Cubic Machinery exhibit, IMTS 2024, Chicago &mdash; a public trade
+              show. Product capabilities described here match Cubic's own published product information. No
+              customer names, customer parts, or proprietary process data appear in this case study.
+            </p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>David Facio — Robotics &amp; Automation Engineer</span>
+      <span>Publicly exhibited work · no customer data.</span>
+    </footer>
+  </body>
+</html>

@@ -22,7 +22,7 @@
     <link rel="canonical" href="https://djfacio.github.io/" />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23f8c44f'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23161a1d'%3EDF%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%230f6f88'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EDF%3C/text%3E%3C/svg%3E"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -34,6 +34,7 @@
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
         <a href="#work">Work</a>
+        <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#tools">Tools</a>
         <a href="#contact">Contact</a>
@@ -42,21 +43,7 @@
 
     <main id="top">
       <section class="hero">
-        <div class="hero-visual" aria-hidden="true">
-          <div class="cell-grid">
-            <span class="machine machine-a"></span>
-            <span class="machine machine-b"></span>
-            <span class="machine machine-c"></span>
-            <span class="robot robot-a"></span>
-            <span class="robot robot-b"></span>
-            <span class="robot robot-c"></span>
-            <span class="vision vision-a"></span>
-            <span class="vision vision-b"></span>
-            <span class="flow flow-a"></span>
-            <span class="flow flow-b"></span>
-            <span class="flow flow-c"></span>
-          </div>
-        </div>
+        <div class="hero-visual" aria-hidden="true"></div>
         <div class="hero-content">
           <p class="hero-name">David Facio</p>
           <p class="eyebrow">Lead Robotics & Automation Engineer</p>
@@ -82,37 +69,40 @@
           <span>largest project scale</span>
         </div>
         <div>
-          <strong>3</strong>
-          <span>robots in one system</span>
+          <strong>7&times;</strong>
+          <span>repeat orders, one design</span>
         </div>
         <div>
-          <strong>4</strong>
-          <span>Mitsubishi cells delivered</span>
+          <strong>IMTS 2024</strong>
+          <span>machines exhibited publicly</span>
         </div>
       </section>
 
       <section id="work" class="section">
         <div class="section-heading">
           <p class="eyebrow">Selected Work</p>
-          <h2>NDA-safe case studies</h2>
+          <h2>Case studies</h2>
           <p>
-            These summaries avoid customer names and proprietary details while preserving the engineering
-            decisions, system complexity, and integration scope.
+            Two of these are machines I helped build and demonstrated publicly at IMTS 2024, shown here in
+            photographs. The rest sit behind customer NDAs, so they are written instead: customer names and
+            proprietary details are withheld, the engineering decisions and integration scope are not.
           </p>
         </div>
 
         <div class="case-grid">
           <article class="case-card">
-            <div class="case-media cnc-media has-photo">
-              <img src="img/cell-cnc-tending.jpg" alt="FANUC-tended CNC machining cell with coolant lines and rotary fixture" loading="lazy" width="1000" height="526" />
+            <div class="case-media cnc-media">
+              <span>Vision</span>
+              <span>Tend</span>
+              <span>Inspect</span>
             </div>
             <div class="case-body">
               <p class="case-type">Vision-guided machine tending</p>
               <h3>Three-robot CNC tending system for bone screw operations</h3>
               <p>
-                Designed and integrated a multi-operation cell with three robots tending three CNC lathes —
-                a finished screw every ~50 s (~12&times; the prior process) at 95% uptime, using hierarchical
-                robot state machines, safety integration, pneumatics, and inspection logic.
+                One cell, three robots tending three CNC lathes, at ~12&times; the output of the process it
+                replaced and 95% uptime. The customer has ordered it seven times. Includes the field
+                revision that came after oil mist killed the first inspection design.
               </p>
               <ul class="tag-list">
                 <li>FANUC</li>
@@ -121,6 +111,50 @@
                 <li>Medical</li>
               </ul>
               <a class="case-link" href="case-study-cnc-tending.html">Read case study</a>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <div class="case-media gtforce-media has-photo">
+              <img src="img/card-gt-force-32.jpg" alt="FANUC robot mounted inside a guarded loader enclosure above a gang-tool CNC lathe, next to the FANUC CNC control panel" loading="lazy" width="1200" height="844" />
+            </div>
+            <div class="case-body">
+              <p class="case-type">Vision-guided machine loading</p>
+              <h3>Machine-mounted robot loader for a gang-tool CNC lathe</h3>
+              <p>
+                A FANUC LR Mate built onto the machine rather than beside it: Keyence vision locates blanks
+                on a loose conveyor, a dual gripper swaps finished part for blank in one entry, and a custom
+                pendant screen runs production without robot programming. Exhibited at IMTS&nbsp;2024.
+              </p>
+              <ul class="tag-list">
+                <li>FANUC</li>
+                <li>Keyence vision</li>
+                <li>CNC interface</li>
+                <li>Operator HMI</li>
+              </ul>
+              <a class="case-link" href="case-study-gt-force-32.html">Read case study</a>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <div class="case-media dbr-media has-photo">
+              <img src="img/card-dbr-m8.jpg" alt="Fully guarded robotic deburring cell with glass panels and a green status light bar on a trade show floor" loading="lazy" width="1200" height="889" />
+            </div>
+            <div class="case-body">
+              <p class="case-type">Force-controlled finishing</p>
+              <h3>Recipe-driven robotic deburring cell</h3>
+              <p>
+                A six-axis robot carries the part to fixed abrasive stations while a force/torque sensor
+                regulates edge contact &mdash; so position error and wheel wear stop mattering, and operators
+                add new parts as recipes instead of robot programs. Exhibited at IMTS&nbsp;2024.
+              </p>
+              <ul class="tag-list">
+                <li>Mitsubishi</li>
+                <li>Force control</li>
+                <li>Vision</li>
+                <li>Recipe HMI</li>
+              </ul>
+              <a class="case-link" href="case-study-dbr-m8.html">Read case study</a>
             </div>
           </article>
 
@@ -134,8 +168,9 @@
               <p class="case-type">Dual-purpose robotic cell</p>
               <h3>Assembly and ultrasonic deburring cell with automatic tool change</h3>
               <p>
-                Built a flexible cell with ~20&nbsp;s automatic changeover between assembly and deburring, servo and
-                pneumatic gripping, four-camera vision, Modbus-controlled feeders, a regrip station, and ultrasonic deburring.
+                Deburring was the requirement; assembly was added so the robot had work between batches and
+                the customer's engineers could get the capital approved. ~20&nbsp;s automatic changeover,
+                four-camera vision, Modbus feeders, regrip station &mdash; and both modes run in production.
               </p>
               <ul class="tag-list">
                 <li>Tool change</li>
@@ -144,6 +179,62 @@
                 <li>Deburring</li>
               </ul>
               <a class="case-link" href="case-study-dual-purpose-cell.html">Read case study</a>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <div class="case-media code-media" role="img" aria-label="A perspective, Star Wars–style crawl of FANUC TP source code from the A_MAIN machine-tending program.">
+              <div class="code-crawl" aria-hidden="true"><pre>LBL[1]
+CALL A_GO_HOME
+IF (F[60:INFEED]) THEN
+  WAIT (F[50:Part_Ready] OR F[20:STOP]) TIMEOUT,LBL[911]
+  CALL A_CALC_PICK
+  CALL A_PICK
+  F[50:Part_Ready]=(OFF)
+  F[61:PART_4_CNC]=(ON)
+  CALL A_FSTART
+  IF R[94]&lt;&gt;200,JMP LBL[990]
+  IF ((R[100]=1 OR R[100]=2) AND R[45]=1),JMP LBL[401]
+  CALL A_CALC_REGRIP
+  CALL A_REGRIP
+  LBL[401]
+ENDIF
+IF (F[61:PART_4_CNC] OR F[62:PART_IN_CNC]) THEN
+  $WAITTMOUT=6000
+  WAIT DI[104:Sync1]=ON TIMEOUT,LBL[912]
+  CALL A_ENTER_CNC
+  IF (F[62:PART_IN_CNC]) THEN
+    CALL A_UNLOAD_CNC
+    F[62:PART_IN_CNC]=(OFF)
+    F[63:PART_4_INS]=(ON)
+  ENDIF
+  IF (F[61:PART_4_CNC]) THEN
+    CALL A_LOAD_CNC
+    DO[104:Ack1]=PULSE,0.5sec
+    WAIT (!DI[104:Sync1]) TIMEOUT,LBL[913]
+  ENDIF
+  CALL A_EXIT_CNC
+ENDIF
+CALL A_GO_HOME
+JMP LBL[1]</pre></div>
+              <span class="code-badge">A_MAIN.LS</span>
+            </div>
+            <div class="case-body">
+              <p class="case-type">Robot programming example</p>
+              <h3>FANUC TP machine-tending cell &amp; safe-return homing</h3>
+              <p>
+                A sanitized look at real robot code: a 31-program <code>A_MAIN</code> cycle with two
+                asynchronous background tasks and timeout-bounded CNC / insertion / conveyor handshakes, plus a
+                breadcrumb-based safe-return homing routine &mdash; shown with call-graph, process-flow, and
+                routing diagrams generated from the code.
+              </p>
+              <ul class="tag-list">
+                <li>FANUC TP</li>
+                <li>Multitasking</li>
+                <li>iRVision</li>
+                <li>Safe recovery</li>
+              </ul>
+              <a class="case-link" href="robot-programming-example.html">View programming example</a>
             </div>
           </article>
 
@@ -197,6 +288,53 @@
         </div>
       </section>
 
+      <section id="about" class="section about-band">
+        <div class="section-heading">
+          <p class="eyebrow">About</p>
+          <h2>The engineer behind the cells</h2>
+        </div>
+        <div class="about-layout">
+          <figure class="about-portrait">
+            <img src="img/portrait-david-facio.jpg" alt="David Facio, robotics and automation engineer, photographed on the Chicago lakefront" width="808" height="1049" />
+          </figure>
+          <div class="about-copy">
+            <p>
+              I'm a robotics and automation engineer working primarily on FANUC and Mitsubishi cells for CNC
+              machine tending, finishing, and general automation &mdash; usually as the person who owns a
+              project from concept through commissioning and customer handoff. In practice that means the
+              robot, the vision system, the safety architecture and the control strategy are my calls, and
+              nothing goes to a customer without my sign-off on the code and the wiring.
+            </p>
+            <p>
+              Most of my work sits behind an NDA, which is why much of this portfolio is written rather than
+              photographed. The exception is the two machines above: products exhibited publicly at IMTS 2024,
+              where I did the robot programming, vision, integration, and operator screens, then stood on the
+              show floor demonstrating them for a week.
+            </p>
+            <p>
+              What holds my attention is what decides whether a cell is still running a year later:
+              recovery behavior, operator screens with few enough choices to stay safe, and changeover a
+              customer's own people can do themselves.
+            </p>
+          </div>
+        </div>
+        <div class="about-pair">
+          <figure class="case-figure">
+            <img src="img/fanuc-academy.jpg" alt="David Facio under a Welcome FANUC Academy banner overlooking the FANUC training floor in Rochester Hills, Michigan" loading="lazy" width="820" height="1367" />
+            <figcaption>
+              FANUC Academy training &mdash; Rochester Hills, MI, 2025.
+            </figcaption>
+          </figure>
+          <figure class="case-figure">
+            <img src="img/booth-imts-2024.jpg" alt="David Facio standing between a gang-tool CNC lathe with robot loader and a robotic deburring cell at the Cubic Machinery exhibit, IMTS 2024" loading="lazy" width="1500" height="825" />
+            <figcaption>
+              Both machines on the show floor at IMTS 2024, Chicago &mdash; robot-loaded lathe at left,
+              deburring cell at right.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       <section id="skills" class="section skill-band">
         <div class="section-heading">
           <p class="eyebrow">Capability Map</p>
@@ -235,7 +373,7 @@
           <p class="eyebrow">Hands-On</p>
           <h2>The gear behind the case studies</h2>
           <p>
-            Vision, controls, and I/O hardware I configure and integrate on the floor &mdash; not stock photos.
+            Vision, controls, and I/O hardware I configure and integrate on the floor.
           </p>
         </div>
         <div class="hardware-grid">
@@ -251,16 +389,24 @@
             <img src="img/hw-fanuc-pcb.jpg" alt="FANUC control PCB" loading="lazy" width="780" height="563" />
             <figcaption>FANUC control hardware</figcaption>
           </figure>
+          <figure>
+            <img src="img/hw-eoat-gripper.jpg" alt="FANUC LR Mate wrist fitted with a dual pneumatic gripper end effector and routed air lines" loading="lazy" width="900" height="864" />
+            <figcaption>Dual-gripper EOAT &amp; pneumatics</figcaption>
+          </figure>
+          <figure>
+            <img src="img/hw-smac-bench.jpg" alt="Bench test setup with a SMAC linear voice-coil actuator, its controller, a Delta PLC, a terminal breakout board and a digital multimeter" loading="lazy" width="900" height="960" />
+            <figcaption>Voice-coil actuator bring-up &mdash; SMAC controller, Delta PLC, I/O breakout</figcaption>
+          </figure>
         </div>
       </section>
 
       <section id="tools" class="section">
         <div class="section-heading">
-          <p class="eyebrow">Process Artifacts</p>
-          <h2>Tools that show how I think through automation work</h2>
+          <p class="eyebrow">Tools</p>
+          <h2>Two things I built to work with</h2>
           <p>
-            These are supporting artifacts, not the main portfolio story. They demonstrate how I structure
-            discovery, risk, commissioning readiness, and technical decision-making.
+            One is the checklist I actually run against a new project before quoting it. The other is a
+            working handshake you can drive yourself, faults and all.
           </p>
         </div>
         <div class="tool-grid">
@@ -268,8 +414,8 @@
             <p class="case-type">Project readiness</p>
             <h3>Robotic cell project assessment</h3>
             <p>
-              A personal working tool for early project review, quoting support, design planning, and
-              commissioning readiness. It is included separately as evidence of engineering process.
+              The questions I want answered before a quote goes out: part variation, payload, vision
+              strategy, robot-to-PLC behavior, safety, recovery cases, and what handoff will require.
             </p>
             <a class="case-link" href="tools-project-assessment.html">Open tool</a>
           </article>
@@ -288,10 +434,10 @@
       <section class="section growth-band">
         <div class="section-heading">
           <p class="eyebrow">Current Focus</p>
-          <h2>Where I'm deepening next</h2>
+          <h2>What I'm working on next</h2>
           <p>
-            Areas I'm actively extending into to broaden end-to-end automation, data ownership, and
-            reusable engineering standards.
+            Cells are getting networked and instrumented whether integrators are ready or not. These are
+            the three areas I'm building depth in now.
           </p>
         </div>
         <div class="growth-grid">
@@ -316,7 +462,8 @@
           <h2>David Facio</h2>
           <p>
             Open to Lead Robotics & Automation Engineer, Senior Robotics Engineer, Robotics Project
-            Engineer, or Robotics Solutions Architect roles across North America and Europe.
+            Engineer, or Robotics Solutions Architect roles across North America; Europe with visa
+            sponsorship.
           </p>
         </div>
         <div class="contact-links">
@@ -329,7 +476,9 @@
 
     <footer class="site-footer">
       <span>David Facio — Robotics & Automation Engineer</span>
-      <span>Built for end-to-end automation leadership roles.</span>
+      <span>Ontario, California · djfacio@gmail.com</span>
     </footer>
+
+    <script src="effects.js" defer></script>
   </body>
 </html>

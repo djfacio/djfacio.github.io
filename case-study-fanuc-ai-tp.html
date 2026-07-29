@@ -19,7 +19,7 @@
     />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23f8c44f'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23161a1d'%3EDF%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%230f6f88'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EDF%3C/text%3E%3C/svg%3E"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -31,6 +31,7 @@
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
         <a href="index.html#work">Work</a>
+        <a href="index.html#about">About</a>
         <a href="index.html#skills">Skills</a>
         <a href="index.html#tools">Tools</a>
         <a href="index.html#contact">Contact</a>
@@ -89,10 +90,10 @@
             <h2>Problem</h2>
             <p>
               Hand-writing and deploying FANUC TP programs is slow, error-prone, and hard to review.
-              Generating them with AI raises the stakes: a single bad register write, IO action, or
-              motion instruction sent to a live controller is machine-control software, not a draft.
-              The goal was a workflow that gets the speed of generation without giving up the
-              verifiability and safety discipline a real cell demands.
+              Generating them with AI raises the stakes: one wrong register write, IO action, or motion
+              instruction reaches a machine that will execute it. The goal was a workflow that keeps the
+              speed of generation without giving up the verifiability and safety discipline a real cell
+              demands.
             </p>
           </section>
 
@@ -121,23 +122,22 @@
           <section class="detail-section">
             <h2>Contribution</h2>
             <p>
-              Creator and domain lead. I built this through AI-assisted development directed by hands-on
-              FANUC experience &mdash; ~60 PowerShell workflow tools, the Rust protocol codec, the JSON schemas,
-              the safety and validation gates, the CI pipeline, and 40+ pages of strategy, workflow, and safety
-              documentation. The engineering judgment &mdash; what's risky on a live controller, what must be
-              validated, how the protocol behaves, and where a human must stay in the loop &mdash; is mine; AI
-              accelerated the implementation.
+              Creator and domain lead. The project covers ~60 PowerShell workflow tools, the Rust protocol
+              codec, the JSON schemas, the safety and validation gates, the CI pipeline, and 40+ pages of
+              workflow and safety documentation. I built it through AI-assisted development directed by
+              hands-on FANUC experience: the judgment about what is risky on a live controller, what has to
+              be validated, how the protocol behaves, and where a human must stay in the loop is mine. AI
+              wrote a great deal of the implementation under that direction.
             </p>
           </section>
 
           <section class="detail-section">
-            <h2>Engineering Judgment</h2>
+            <h2>Where the difficulty actually was</h2>
             <p>
-              The hard part was not generating robot code &mdash; it was building the guardrails that make
-              generated code trustworthy. The architecture deliberately separates planning, deterministic
-              generation, validation, and human-approved deployment so that speed never bypasses review,
-              and so failure modes stay visible to operators and maintenance rather than hidden inside a
-              black box.
+              Generating robot code turned out to be the easy half. The guardrails took the real work:
+              separating planning, deterministic generation, validation, and human-approved deployment into
+              stages that cannot be collapsed, so speed never routes around review and failure modes stay
+              legible to whoever has to maintain the cell.
             </p>
           </section>
 

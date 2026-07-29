@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" role="img" aria-label="FANUC TP code excerpt from A_MAIN: the CNC load/unload handshake. A bounded WAIT on the CNC ready signal faults out on timeout; on success the robot enters the CNC, unloads the finished part and flips its state flags, loads a raw part, pulses the acknowledge, and waits for the ready signal to clear before exiting.">
+  <style>
+    .cd{font:16px 'SFMono-Regular',ui-monospace,Menlo,Consolas,'Liberation Mono',monospace}
+    .ln{font:13px ui-monospace,monospace;fill:#3f5a72}
+    .fn{font:13px 'SFMono-Regular',ui-monospace,monospace;fill:#9fb3c8}
+    .tag{font:12px Inter,system-ui,sans-serif;fill:#46617a}
+    .kw{fill:#7fd6cb}.df{fill:#d7e2ea}.cm{fill:#7f9bb0;font-style:italic}
+    .gd{fill:#f8c44f;font-weight:700}.gc{fill:#caa24a;font-style:italic}
+  </style>
+  <rect width="760" height="430" fill="#0c1622"/>
+  <!-- title bar -->
+  <rect width="760" height="46" fill="#101d30"/>
+  <line x1="0" y1="46" x2="760" y2="46" stroke="#1b2d44" stroke-width="1"/>
+  <rect x="16" y="12" width="104" height="22" rx="5" fill="#1b2d44"/>
+  <text x="28" y="28" class="fn">A_MAIN.LS</text>
+  <text x="744" y="28" text-anchor="end" class="tag">CNC load / unload handshake</text>
+  <!-- highlight row: the bounded WAIT gate -->
+  <rect x="0" y="124" width="760" height="30" fill="#f8c44f" opacity="0.10"/>
+  <rect x="0" y="124" width="4" height="30" fill="#f8c44f"/>
+  <!-- line numbers -->
+  <text x="48" y="84"  text-anchor="end" class="ln">1</text>
+  <text x="48" y="114" text-anchor="end" class="ln">2</text>
+  <text x="48" y="144" text-anchor="end" class="ln">3</text>
+  <text x="48" y="174" text-anchor="end" class="ln">4</text>
+  <text x="48" y="204" text-anchor="end" class="ln">5</text>
+  <text x="48" y="234" text-anchor="end" class="ln">6</text>
+  <text x="48" y="264" text-anchor="end" class="ln">7</text>
+  <text x="48" y="294" text-anchor="end" class="ln">8</text>
+  <text x="48" y="324" text-anchor="end" class="ln">9</text>
+  <text x="48" y="354" text-anchor="end" class="ln">10</text>
+  <text x="48" y="384" text-anchor="end" class="ln">11</text>
+  <!-- code -->
+  <text x="64" y="84"  class="cd"><tspan class="cm">! coordinate with the CNC - never trust it blindly</tspan></text>
+  <text x="64" y="114" class="cd"><tspan class="df">$WAITTMOUT=6000</tspan></text>
+  <text x="64" y="144" class="cd"><tspan class="gd">WAIT</tspan><tspan class="gd"> DI[104:Sync1]=ON </tspan><tspan class="gd">TIMEOUT</tspan><tspan class="gd">,LBL[912]</tspan><tspan class="gc">   ! ready, or fault</tspan></text>
+  <text x="64" y="174" class="cd"><tspan class="kw">CALL</tspan><tspan class="df"> A_ENTER_CNC</tspan></text>
+  <text x="64" y="204" class="cd"><tspan class="kw">IF</tspan><tspan class="df"> (F[62:PART_IN_CNC]) </tspan><tspan class="kw">THEN</tspan></text>
+  <text x="64" y="234" class="cd"><tspan class="df">  </tspan><tspan class="kw">CALL</tspan><tspan class="df"> A_UNLOAD_CNC</tspan><tspan class="cm">   ! take finished part</tspan></text>
+  <text x="64" y="264" class="cd"><tspan class="df">  F[62:PART_IN_CNC]=(OFF)  F[63:PART_4_INS]=(ON)</tspan></text>
+  <text x="64" y="294" class="cd"><tspan class="kw">ENDIF</tspan></text>
+  <text x="64" y="324" class="cd"><tspan class="kw">CALL</tspan><tspan class="df"> A_LOAD_CNC</tspan><tspan class="cm">   ! stage raw part</tspan></text>
+  <text x="64" y="354" class="cd"><tspan class="kw">DO</tspan><tspan class="df">[104:Ack1]=PULSE,0.5sec</tspan></text>
+  <text x="64" y="384" class="cd"><tspan class="kw">WAIT</tspan><tspan class="df"> (!DI[104:Sync1]) </tspan><tspan class="kw">TIMEOUT</tspan><tspan class="df">,LBL[913]</tspan></text>
+</svg>

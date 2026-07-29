@@ -19,7 +19,7 @@
     />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23f8c44f'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23161a1d'%3EDF%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%230f6f88'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EDF%3C/text%3E%3C/svg%3E"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -31,6 +31,7 @@
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
         <a href="index.html#work">Work</a>
+        <a href="index.html#about">About</a>
         <a href="index.html#skills">Skills</a>
         <a href="index.html#tools">Tools</a>
         <a href="index.html#contact">Contact</a>
@@ -43,8 +44,9 @@
         <p class="eyebrow">Flexible Robotic Automation</p>
         <h1>Dual-purpose robotic cell for assembly and ultrasonic deburring.</h1>
         <p>
-          NDA-safe summary of a flexible robotic cell using automatic tool change, servo and pneumatic gripping,
-          four-camera vision, Modbus-controlled feeders, regrip tooling, and ultrasonic deburring.
+          A flexible robotic cell using automatic tool change, servo and pneumatic gripping, four-camera
+          vision, Modbus-controlled feeders, regrip tooling, and ultrasonic deburring. Customer identity and
+          process details are withheld.
         </p>
       </section>
 
@@ -83,8 +85,16 @@
           <section class="detail-section">
             <h2>Problem</h2>
             <p>
-              The cell needed to support two distinct automated processes in one robotic platform while managing
-              part presentation, tool changes, vision decisions, regripping, and process-specific end effectors.
+              Deburring was the actual need. Assembly was there so the robot had something to do when there
+              was no deburring to run &mdash; the customer's engineers needed a utilization case strong
+              enough to get the capital approved by their own management, and one process alone did not
+              produce it.
+            </p>
+            <p>
+              That turns a flexibility requirement into a commercial one, and it changes what "good" means.
+              Idle time is the thing being engineered away, so the changeover between the two modes has to be
+              short enough and reliable enough to actually happen during a production week &mdash; not just
+              short enough to demonstrate once at FAT.
             </p>
           </section>
 
@@ -114,14 +124,24 @@
               <li>Switched between assembly and deburring modes in ~20 s via automatic tool change &mdash; two processes on one robot platform.</li>
               <li>Three vision cameras located parts fast enough to hold the 20 s assembly takt; a fourth handled feature location for deburring.</li>
               <li>Regrip station and process-specific EOAT kept the flexible cell recoverable and operator-friendly across both modes.</li>
+              <li><strong>Both modes are in real production use</strong> &mdash; assembly runs between deburring batches, which is the test the utilization case had to pass once the purchase was no longer in question.</li>
             </ul>
           </section>
 
           <section class="detail-section">
-            <h2>Engineering Judgment</h2>
+            <h2>The tradeoff</h2>
             <p>
-              The core challenge was making flexibility manageable. The cell had to change tools and process modes
-              without becoming fragile, difficult to recover, or confusing for operators.
+              Every mode a flexible cell gains is another state it can get stuck in. Two processes, two tool
+              sets, two gripper types and four cameras multiply quickly into recovery cases nobody wants to
+              debug at 2 a.m. Keeping the mode logic in the PLC and the changeover fully automatic was what
+              stopped flexibility from turning into fragility.
+            </p>
+            <p>
+              The failure mode I was designing against was not technical. A cell justified on utilization
+              that turns out to be awkward to switch gets used for its primary process only, and the
+              secondary one quietly disappears &mdash; leaving the customer's engineers holding a business
+              case that did not materialize. Making changeover automatic and unremarkable was how that
+              case stayed true after the purchase order was signed.
             </p>
           </section>
 
@@ -140,8 +160,8 @@
                   .f2{stroke:#5d6975;stroke-width:2.5;fill:none;marker-end:url(#arw2)}
                 </style>
                 <!-- badge -->
-                <rect x="270" y="6" width="380" height="34" rx="9" fill="#101820" />
-                <text x="460" y="28" text-anchor="middle" style="font:700 12px Inter,sans-serif" fill="#f8c44f">One platform, two processes &#183; ~20 s automatic changeover</text>
+                <rect x="270" y="6" width="380" height="34" rx="9" fill="#0c1622" />
+                <text x="460" y="28" text-anchor="middle" style="font:700 12px Inter,sans-serif" fill="#7fd6cb">One platform, two processes &#183; ~20 s automatic changeover</text>
                 <!-- mode labels -->
                 <text x="470" y="70" class="mode" fill="#2a8c63">ASSEMBLY MODE</text>
                 <text x="470" y="214" class="mode" fill="#b56b18">DEBURRING MODE</text>
@@ -155,14 +175,14 @@
                 <text x="288" y="186" text-anchor="middle" class="m1">200iD/7L</text>
                 <text x="288" y="204" text-anchor="middle" class="m2">automatic tool changer</text>
                 <!-- assembly branch -->
-                <rect x="470" y="78" width="188" height="54" rx="8" fill="#eaf1fb" stroke="#1f6feb" stroke-width="2" />
+                <rect x="470" y="78" width="188" height="54" rx="8" fill="#e6f1f3" stroke="#0f6f88" stroke-width="2" />
                 <text x="564" y="101" text-anchor="middle" class="m1">Keyence 3-cam vision</text>
                 <text x="564" y="118" text-anchor="middle" class="m2">locate at 20 s takt</text>
                 <rect x="700" y="78" width="170" height="54" rx="8" fill="#eaf3ee" stroke="#2a8c63" stroke-width="2" />
                 <text x="785" y="101" text-anchor="middle" class="m1">Assembly</text>
                 <text x="785" y="118" text-anchor="middle" class="m2">screw + washer</text>
                 <!-- deburr branch -->
-                <rect x="470" y="222" width="188" height="54" rx="8" fill="#eaf1fb" stroke="#1f6feb" stroke-width="2" />
+                <rect x="470" y="222" width="188" height="54" rx="8" fill="#e6f1f3" stroke="#0f6f88" stroke-width="2" />
                 <text x="564" y="245" text-anchor="middle" class="m1">4th camera</text>
                 <text x="564" y="262" text-anchor="middle" class="m2">feature locate</text>
                 <rect x="700" y="222" width="170" height="54" rx="8" fill="#faf0e2" stroke="#b56b18" stroke-width="2" />
@@ -190,7 +210,7 @@
 
     <footer class="site-footer">
       <span>David Facio — Robotics & Automation Engineer</span>
-      <span>NDA-safe technical case study.</span>
+      <span>Customer and process details withheld.</span>
     </footer>
   </body>
 </html>

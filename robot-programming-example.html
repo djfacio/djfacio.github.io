@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>David Facio | FANUC Robot Programming Example</title>
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="FANUC Robot Programming Example — David Facio" />
+    <meta property="og:description" content="A sanitized look at real FANUC TP code: a 31-program machine-tending cycle with asynchronous tasks and I/O-handshaked stations, plus a breadcrumb-based safe-return homing routine." />
+    <meta property="og:url" content="https://djfacio.github.io/robot-programming-example.html" />
+    <meta property="og:image" content="https://djfacio.github.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://djfacio.github.io/robot-programming-example.html" />
+    <meta
+      name="description"
+      content="Sanitized FANUC TP robot programming example: an A_MAIN machine-tending cell with asynchronous multitasking and I/O handshaking, plus an A_AUTO_HOME safe-return homing routine, shown with call-graph, process-flow, and routing diagrams."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%230f6f88'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EDF%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* page-scoped: hero accent (matches the other case heroes) + code + image diagrams */
+      .prog-detail {
+        background:
+          linear-gradient(90deg, rgba(12, 22, 34, 0.94), rgba(12, 22, 34, 0.58)),
+          repeating-linear-gradient(90deg, transparent, transparent 44px, rgba(255, 255, 255, 0.06) 45px),
+          linear-gradient(135deg, var(--dark), var(--steel));
+      }
+      .case-diagram img {
+        display: block;
+        width: 100%;
+        min-width: 660px;
+        height: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+      .diagram-note {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .diagram-note a { color: var(--teal, #0f6f88); font-weight: 700; }
+      pre.code-sample {
+        margin: 12px 0 4px;
+        padding: 18px 20px;
+        overflow-x: auto;
+        border-radius: 8px;
+        background: #0c1622;
+        color: #d7e2ea;
+        font: 500 13px/1.6 "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+        max-width: 860px;
+      }
+      pre.code-sample .c { color: #7f9bb0; font-style: italic; } /* comment */
+      pre.code-sample .k { color: #7fd6cb; }                    /* keyword  */
+      pre.code-sample b { color: #f8c44f; font-weight: 700; }   /* emphasis */
+      .code-caption { max-width: 860px; color: var(--muted); font-size: 0.92rem; margin: 6px 0 0; }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html#top" aria-label="Portfolio home">
+        <span class="brand-mark">DF</span>
+        <span class="brand-text">David Facio</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="case-page">
+      <section class="case-hero-detail prog-detail">
+        <a class="breadcrumb" href="index.html#work">Back to work</a>
+        <p class="eyebrow">Robot Programming Example</p>
+        <h1>Inside the code: a FANUC machine-tending cell and its safe-return homing.</h1>
+        <p>
+          Most of this portfolio is written rather than shown, because the code sits behind NDAs. This is
+          the sanitized exception &mdash; real FANUC TP program structure from a delivered cell, with customer
+          identifiers and taught coordinates removed and part identity abstracted to registers. Two programs
+          are featured together: the machine-tending cycle and the safe-return homing routine.
+        </p>
+      </section>
+
+      <section class="case-detail-grid">
+        <aside class="case-facts">
+          <h2>Program Snapshot</h2>
+          <dl>
+            <div><dt>Language</dt><dd>FANUC TP (teach pendant)</dd></div>
+            <div><dt>Controller</dt><dd>R-30iB Mate Plus &middot; iRVision</dd></div>
+            <div><dt>Entry point</dt><dd>A_MAIN</dd></div>
+            <div><dt>Programs</dt><dd>31-program dependency tree</dd></div>
+            <div><dt>Concurrency</dt><dd>3 cooperating tasks</dd></div>
+            <div><dt>Recovery</dt><dd>A_AUTO_HOME breadcrumb homing</dd></div>
+          </dl>
+        </aside>
+
+        <div class="case-sections">
+          <section class="detail-section">
+            <h2>The cell</h2>
+            <p>
+              A single FANUC robot feeds parts from a flexible bowl feeder through a CNC and a tube-insertion
+              station and out to a conveyor, using iRVision to locate parts and a regrip station to reorient
+              them. What's worth looking at here is the program structure: how the robot keeps several parts
+              in flight at once, coordinates with each machine, and recovers predictably when one of them
+              stalls.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Program structure &mdash; A_MAIN</h2>
+            <ul class="decision-list">
+              <li><b>Asynchronous multitasking.</b> Two background tasks (feeder and conveyor) run in parallel with the main cycle, coordinated through flags and <code>TSKSTATUS</code> polling rather than blocking the robot.</li>
+              <li><b>Pipelined part-state machine.</b> A part advances through flag states (staged &rarr; in&nbsp;CNC &rarr; for&nbsp;insertion &rarr; out) so one part can machine while the next is picked.</li>
+              <li><b>Timeout-bounded handshakes.</b> Every equipment sync waits with <code>$WAITTMOUT</code> and routes failure to a distinct <code>UALM</code> &mdash; no silent hangs.</li>
+              <li><b>Dual-gripper tooling</b> and vision-driven pick/regrip offsets built at runtime into position registers.</li>
+            </ul>
+            <div class="case-diagram">
+              <img src="img/prog-call-graph.svg" alt="Call graph of the A_MAIN program: the main loop calls initialization, pick, regrip, CNC enter/unload/load/exit, tube-insertion, and conveyor routines; A_FSTART and A_CSTART launch the A_FLEXI_LOADER and A_CONVEYOR programs as asynchronous background tasks." loading="lazy" />
+            </div>
+            <p class="diagram-note">
+              Call graph from <code>A_MAIN</code> &mdash; solid arrows are calls; dashed arrows launch a
+              background task. <a href="img/prog-cell-flow.svg" target="_blank" rel="noreferrer">View the runtime process flow &rarr;</a>
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Defensive handshaking</h2>
+            <p>
+              Coordinating with a CNC means waiting on the machine without ever trusting it blindly. Each
+              exchange is bounded by a timeout and fails to a specific alarm, and part ownership only
+              transfers after the acknowledge completes.
+            </p>
+<pre class="code-sample"><span class="c">! UNLOAD then LOAD the CNC</span>
+IF (F[61:PART_4_CNC] OR F[62:PART_IN_CNC]) THEN
+  $WAITTMOUT = 6000
+  <span class="k">WAIT</span> DI[104:Sync1]=ON <span class="k">TIMEOUT</span>,LBL[912]     <span class="c">! CNC ready, or fault out</span>
+  CALL A_ENTER_CNC
+  IF (F[62:PART_IN_CNC]) THEN
+    CALL A_UNLOAD_CNC                          <span class="c">! take the finished part</span>
+    F[62:PART_IN_CNC]=(OFF)  F[63:PART_4_INS]=(ON)
+  ENDIF
+  IF (F[61:PART_4_CNC]) THEN
+    CALL A_LOAD_CNC                            <span class="c">! stage the raw part</span>
+    DO[104:Ack1]=<b>PULSE,0.5sec</b>
+    <span class="k">WAIT</span> (!DI[104:Sync1]) <span class="k">TIMEOUT</span>,LBL[913]
+  ENDIF
+  CALL A_EXIT_CNC
+ENDIF</pre>
+            <p class="code-caption">Excerpt from <code>A_MAIN</code> (comments and spacing lightly adjusted for the web; logic unchanged).</p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Safe-return homing &mdash; A_AUTO_HOME</h2>
+            <p>
+              A tested, deployed utility that returns the robot home along a <em>known-safe</em> path from
+              wherever it last stopped &mdash; the recurring hard problem in machine tending, where a blind
+              jog-to-home can drive the arm through a chuck or fixture. Every motion program writes a
+              breadcrumb (<code>R[95]</code>, its last position register); <code>A_AUTO_HOME</code> reads it,
+              jumps to the retract route for that station, and converges through shared safe waypoints to home.
+            </p>
+<pre class="code-sample"><span class="k">OVERRIDE</span>=10%                       <span class="c">! slow down before any motion</span>
+<span class="c">! route home from the last-motion breadcrumb in R[95]</span>
+IF R[95:Last Motion PR]&lt;1,   JMP LBL[900]
+IF R[95:Last Motion PR]&gt;101, JMP LBL[900]
+IF R[95:Last Motion PR]=2,   JMP LBL[900]   <span class="c">! no route defined</span>
+IF R[95:Last Motion PR]=9,   JMP LBL[900]
+<b>JMP LBL[R[95]]</b>                       <span class="c">! computed jump to the matching safe route</span>
+  <span class="c">...retract route -&gt; shared safe waypoint -&gt; JHOME...</span>
+LBL[900]
+MESSAGE[AUTO HOME REVIEW R95]           <span class="c">! unknown pose: alarm, do NOT move</span>
+UALM[16]
+END</pre>
+            <p class="code-caption">Excerpt from <code>A_AUTO_HOME</code> &mdash; the guard rejects invalid or undefined breadcrumbs and alarms instead of guessing.</p>
+            <div class="case-diagram">
+              <img src="img/prog-routing-graph.svg" alt="Routing graph of A_AUTO_HOME: the breadcrumb router fans out to each station's retract route; routes converge through shared safe waypoints (regrip safe, outside CNC, tube-insertion safe, conveyor safe) to home. An invalid breadcrumb routes to a manual-review alarm instead of moving." loading="lazy" />
+            </div>
+            <p class="diagram-note">Safe-return routing &mdash; many entry states, a handful of safe waypoints, one home.</p>
+          </section>
+
+          <section class="detail-section">
+            <h2>On sanitization &amp; the diagrams</h2>
+            <p>
+              Company and customer identifiers are removed, and taught coordinates are computed into
+              registers at runtime, so no proprietary geometry or part data is present &mdash; only standard
+              automation structure (feeder, CNC, conveyor, regrip). The diagrams are traced from the call
+              structure of the programs themselves rather than drawn by hand, so what they show is what the
+              code actually does.
+            </p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>David Facio — Robotics & Automation Engineer</span>
+      <span>Sanitized robot programming sample.</span>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>David Facio | Machine-Mounted Robot Loader Case Study</title>
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Vision-Guided Robot Loader for a Gang-Tool CNC Lathe — David Facio" />
+    <meta property="og:description" content="Case study: a machine-mounted FANUC LR Mate loader with Keyence vision-guided picking, dual-gripper EOAT, and a custom operator run screen, exhibited at IMTS 2024." />
+    <meta property="og:url" content="https://djfacio.github.io/case-study-gt-force-32.html" />
+    <meta property="og:image" content="https://djfacio.github.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://djfacio.github.io/case-study-gt-force-32.html" />
+    <meta
+      name="description"
+      content="Case study for a machine-mounted FANUC robot loader on a gang-tool CNC lathe: vision-guided picking from a conveyor, dual-gripper EOAT, CNC and PLC integration, and a custom operator run screen."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%230f6f88'/%3E%3Ctext x='19' y='26' font-family='Inter,sans-serif' font-size='18' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EDF%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html#top" aria-label="Portfolio home">
+        <span class="brand-mark">DF</span>
+        <span class="brand-text">David Facio</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="case-page">
+      <section class="case-hero-detail gtforce-detail">
+        <a class="breadcrumb" href="index.html#work">Back to work</a>
+        <p class="eyebrow">Vision-Guided Machine Loading</p>
+        <h1>Machine-mounted robot loader for a gang-tool CNC lathe.</h1>
+        <p>
+          A compact automatic loading system built onto a Cubic GT Force-32 gang-tool lathe: a
+          machine-mounted FANUC LR Mate picks blanks from a vision-guided conveyor, loads and unloads the
+          collet in a single trip, and runs from an operator screen that needs no robot programming.
+          Exhibited publicly at IMTS 2024 in Chicago.
+        </p>
+      </section>
+
+      <section class="case-detail-grid">
+        <aside class="case-facts">
+          <h2>System Snapshot</h2>
+          <dl>
+            <div>
+              <dt>Industry</dt>
+              <dd>Precision turned parts &amp; fasteners</dd>
+            </div>
+            <div>
+              <dt>Application</dt>
+              <dd>CNC lathe load / unload</dd>
+            </div>
+            <div>
+              <dt>Machine</dt>
+              <dd>Cubic GT Force-32 gang-tool lathe, FANUC 0i-TF Plus CNC</dd>
+            </div>
+            <div>
+              <dt>Robot</dt>
+              <dd>FANUC LR Mate 200iD/4S, machine-mounted</dd>
+            </div>
+            <div>
+              <dt>Vision</dt>
+              <dd>Keyence 2D over conveyor &mdash; ShapeTrax pattern match, robot coordinate conversion</dd>
+            </div>
+            <div>
+              <dt>EOAT</dt>
+              <dd>Dual pneumatic gripper &mdash; unload and reload in one entry</dd>
+            </div>
+            <div>
+              <dt>Integration</dt>
+              <dd>Robot &harr; CNC &harr; PLC, custom pendant run screen</dd>
+            </div>
+            <div>
+              <dt>Exhibited</dt>
+              <dd>IMTS 2024, Chicago</dd>
+            </div>
+          </dl>
+        </aside>
+
+        <div class="case-sections">
+          <section class="detail-section">
+            <h2>Problem</h2>
+            <p>
+              Shops running secondary lathe operations lose margin to hand loading &mdash; an operator stands
+              at the machine feeding one blank at a time, and the spindle idles between parts. Automating it
+              usually means a floor-standing robot cell that costs more than the lathe and consumes floor
+              space the shop does not have.
+            </p>
+            <p>
+              The design problem was to put a robot on the machine rather than beside it, keep the footprint
+              close to that of the bare lathe, and make it something a machinist &mdash; not a robot
+              programmer &mdash; can run and change over.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>Architecture</h2>
+            <ul class="decision-list">
+              <li>
+                A FANUC LR Mate 200iD/4S mounted in a guarded enclosure directly above the work zone, so the
+                loader travels with the machine instead of occupying separate floor space.
+              </li>
+              <li>
+                An infeed conveyor presents blanks loosely rather than in a precision fixture, removing the
+                need for a hard-tooled tray for every part number.
+              </li>
+              <li>
+                A fixed overhead Keyence camera locates each blank on the belt and converts the result into a
+                robot frame offset, so the robot picks from where the part actually is.
+              </li>
+              <li>
+                A dual pneumatic gripper carries a finished part out and a blank in on the same entry,
+                cutting the number of moves into the collet in half.
+              </li>
+              <li>
+                Robot, CNC, and PLC exchange state through interlocked signals covering chuck open/close,
+                cycle start, door and guard status, and part-present confirmation.
+              </li>
+              <li>
+                Operator control lives on a custom run screen on the teach pendant, so normal production
+                never requires entering robot programming.
+              </li>
+            </ul>
+          </section>
+
+          <section class="detail-section">
+            <h2>Vision-Guided Picking</h2>
+            <p>
+              The vision program is deliberately short and inspectable: capture, two ShapeTrax pattern
+              matches, a robot coordinate conversion, and a data output step. The conversion stage is what
+              makes the loose-conveyor approach work &mdash; it turns a pixel-space match into an X, Y, and
+              Rz shift the robot applies to its pick position, so the same taught path handles parts that
+              land anywhere in the camera's field.
+            </p>
+            <p>
+              Keeping the flow to five steps was a maintenance decision as much as a technical one. A short
+              program is one a customer's own technician can open, read, and re-teach for the next part
+              family.
+            </p>
+            <div class="case-gallery">
+              <figure class="case-figure wide">
+                <img src="img/gt-force-32-vision-flow.jpg" alt="Keyence vision program showing a five-step flow: capture, two ShapeTrax pattern matches, robot coordinate conversion, and data output, with live X, Y and Rz shift values beside an image of a turned bushing" loading="lazy" width="1000" height="853" />
+                <figcaption>
+                  The running vision flow: pattern match &rarr; robot coordinate conversion &rarr; data
+                  output, with live X / Y / Rz shift values sent to the robot.
+                </figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="detail-section">
+            <h2>Operator Interface</h2>
+            <p>
+              The pendant run screen exposes exactly the actions a machinist needs during a shift &mdash;
+              start, hold, cycle stop, abort, fault reset, send robot home, reset counter &mdash; and a home
+              position indicator that answers the first question anyone asks after a fault: is the robot
+              actually clear of the machine?
+            </p>
+            <p>
+              Everything else stays behind the standard FANUC interface. The screen is a deliberate
+              narrowing: fewer choices during production means fewer ways to put the robot somewhere the
+              recovery logic did not expect.
+            </p>
+            <div class="case-gallery">
+              <figure class="case-figure tall">
+                <img src="img/gt-force-32-hmi-vision.jpg" alt="FANUC teach pendant showing a custom run screen with Abort, Fault Reset, Start, Cycle Stop, Home, Robot at Home and Reset Counter buttons, beneath a monitor displaying a passing vision inspection result" loading="lazy" width="1000" height="1778" />
+                <figcaption>
+                  Custom pendant run screen below the live vision result &mdash; the whole operator surface
+                  for a production shift.
+                </figcaption>
+              </figure>
+              <figure class="case-figure tall">
+                <img src="img/gt-force-32-robot-conveyor.jpg" alt="FANUC LR Mate robot arm with dual pneumatic gripper reaching toward an infeed conveyor beneath a fixed overhead machine-vision camera" loading="lazy" width="1000" height="1778" />
+                <figcaption>
+                  Dual gripper approaching the vision-guided infeed conveyor, camera fixed above the belt.
+                </figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="detail-section">
+            <h2>Contribution</h2>
+            <p>
+              I was the controls and robotics engineer for the automation package: robot program structure
+              and motion, EOAT selection and pneumatics, vision setup and calibration, the robot-to-CNC and
+              robot-to-PLC interface, safety configuration, the operator run screen, and commissioning and
+              demonstration of the system on the show floor.
+            </p>
+            <p>
+              The GT Force-32 lathe itself is a Cubic Machinery product; my scope was the loading system
+              built onto it and the integration between the two.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>The tradeoff</h2>
+            <p>
+              The tempting version of this system uses a precision infeed fixture and no camera: cheaper on
+              paper, faster to prove out on one part. It also makes every new part number a tooling project.
+            </p>
+            <p>
+              Spending the cost and calibration effort on vision instead moved the changeover from the
+              machine shop to the operator screen. That is the trade that makes a loader worth buying for a
+              shop with a mix of short runs, and it is the reason the same machine could run different demo
+              parts through a week-long show without retooling.
+            </p>
+          </section>
+
+          <section class="detail-section">
+            <h2>The Machine</h2>
+            <div class="case-gallery">
+              <figure class="case-figure tall">
+                <img src="img/gt-force-32-machine.jpg" alt="Cubic GT Force-32 gang-tool CNC lathe with a yellow FANUC robot visible inside the guarded loader enclosure above the work zone, alongside the FANUC CNC control panel" loading="lazy" width="1000" height="1778" />
+                <figcaption>Loader enclosure mounted above the lathe work zone, beside the CNC control.</figcaption>
+              </figure>
+              <figure class="case-figure tall">
+                <img src="img/gt-force-32-eoat.jpg" alt="Close view of the FANUC LR Mate wrist with a dual pneumatic gripper end effector and routed air lines" loading="lazy" width="1000" height="1778" />
+                <figcaption>Dual-gripper EOAT and air routing at the robot wrist.</figcaption>
+              </figure>
+            </div>
+            <p class="photo-note">
+              Photographs taken at the Cubic Machinery exhibit, IMTS 2024, Chicago &mdash; a public trade
+              show. No customer names, customer parts, or proprietary process data appear in this case study.
+            </p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>David Facio — Robotics &amp; Automation Engineer</span>
+      <span>Publicly exhibited work · no customer data.</span>
+    </footer>
+  </body>
+</html>
